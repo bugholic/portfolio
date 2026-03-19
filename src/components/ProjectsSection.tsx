@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import { SectionHeader } from "./SectionHeader";
 import { ProjectCard } from "./ProjectCard";
 import { getPortfolioProjects, type PortfolioProject } from "../mvc/controllers/projects/ProjectsController";
+import { useScrollParallax } from "../hooks/useScrollParallax";
 
 export function ProjectsSection() {
   const [projects, setProjects] = useState<PortfolioProject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { ref, slowY } = useScrollParallax({ slow: 25 });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -31,11 +34,14 @@ export function ProjectsSection() {
   }, []);
 
   return (
-    <section id="projects" className="py-32 px-6 max-w-7xl mx-auto">
-      <SectionHeader
-        title="Selected Works"
-        subtitle="Live repositories from my GitHub profile, focused on full-stack engineering and performance."
-      />
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    <section ref={ref as any} id="projects" className="scroll-mt-28 py-32 px-6 max-w-7xl mx-auto">
+      <motion.div style={{ y: slowY }}>
+        <SectionHeader
+          title="Selected Works"
+          subtitle="Live repositories from my GitHub profile, focused on full-stack engineering and performance."
+        />
+      </motion.div>
 
       {loading && (
         <p className="text-center text-white/60 font-mono text-xs tracking-widest uppercase">Loading repositories...</p>

@@ -1,5 +1,6 @@
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { ArrowRight, ExternalLink, Star } from "lucide-react";
+import { useMagneticEffect } from "../hooks/useMagneticEffect";
 
 type ProjectCardProps = {
   name: string;
@@ -43,8 +44,38 @@ export function ProjectCard({
     : null;
   const previewImage = homepagePreview ?? repoBanner;
 
+  const { ref, x, y, onMouseMove: magneticMove, onMouseLeave: magneticLeave } = useMagneticEffect(0.25);
+
+  const rawRotateX = useMotionValue(0);
+  const rawRotateY = useMotionValue(0);
+  const rotateX = useSpring(rawRotateX, { stiffness: 150, damping: 15 });
+  const rotateY = useSpring(rawRotateY, { stiffness: 150, damping: 15 });
+
+  const isTouch = typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
+
+  function handleMouseMove(event: React.MouseEvent) {
+    magneticMove(event);
+    if (isTouch) return;
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    rawRotateX.set(-((event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2)) * 5);
+    rawRotateY.set(((event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)) * 5);
+  }
+
+  function handleMouseLeave() {
+    magneticLeave();
+    rawRotateX.set(0);
+    rawRotateY.set(0);
+  }
+
   return (
     <motion.div
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ref={ref as any}
+      style={{ x, y, rotateX, rotateY, transformPerspective: 800 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
