@@ -6,6 +6,9 @@ export function Navbar() {
         <a href="#about" className="hover:text-white transition-colors">
           About
         </a>
+        <a href="#experience" className="hover:text-white transition-colors">
+          Experience
+        </a>
         <a href="#projects" className="hover:text-white transition-colors">
           Projects
         </a>

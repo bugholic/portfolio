@@ -1,4 +1,5 @@
 import { AboutSection } from "./components/AboutSection";
+import { ExperienceSection } from "./components/ExperienceSection";
 import { Footer } from "./components/Footer";
 import { HeroSection } from "./components/HeroSection";
 import { Navbar } from "./components/Navbar";
@@ -17,6 +18,7 @@ export default function App() {
       <Navbar />
       <HeroSection />
       <AboutSection />
+      <ExperienceSection />
       <TechStackSection />
       <ProjectsSection />
       <Footer />
