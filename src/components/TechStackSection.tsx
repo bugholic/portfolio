@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { Layers, Code2, Database, Wind, Box, Cpu, Sparkles, Smartphone, Braces, Cylinder } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
 import { TechCard } from "./TechCard";
+import { useScrollParallax } from "../hooks/useScrollParallax";
 
 const stackItems = [
   {
@@ -78,8 +79,21 @@ const workflowSteps = [
 ];
 
 export function TechStackSection() {
+  const { ref, slowY, midY } = useScrollParallax({ slow: 30, mid: 55 });
+
   return (
-    <section id="stack" className="py-24 px-6 max-w-6xl mx-auto">
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    <section ref={ref as any} id="stack" className="relative scroll-mt-28 py-24 px-6 max-w-6xl mx-auto overflow-hidden">
+      {/* Parallax depth layers */}
+      <motion.div
+        style={{ y: slowY }}
+        className="pointer-events-none absolute top-0 -left-20 h-40 w-40 rounded-full bg-cyan-400/6 blur-3xl"
+      />
+      <motion.div
+        style={{ y: midY }}
+        className="pointer-events-none absolute -bottom-10 right-0 h-48 w-48 rounded-full bg-blue-500/6 blur-3xl"
+      />
+
       <SectionHeader
         title="Tech Stack"
         subtitle="A compact look at the tools I rely on to ship clean interfaces, stable backends, and practical automation."
