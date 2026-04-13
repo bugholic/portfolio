@@ -81,14 +81,14 @@ export function HeroSection() {
                   "1px 1px 0 rgba(14,165,233,0.5), 2px 2px 0 rgba(14,165,233,0.4), 3px 3px 0 rgba(14,165,233,0.3), 4px 4px 0 rgba(14,165,233,0.2), 5px 5px 0 rgba(14,165,233,0.12), 6px 6px 12px rgba(14,165,233,0.15)",
               }}
             >
-              Building interfaces that feel{" "}
+              Building Softwares that 
               <span
                 className="bg-[linear-gradient(135deg,#f8fdff_0%,#67e8f9_45%,#0ea5e9_100%)] bg-clip-text text-transparent"
                 style={{
                   filter: "drop-shadow(0 4px 24px rgba(103,232,249,0.35)) drop-shadow(0 1px 0 rgba(14,165,233,0.6))",
                 }}
               >
-                alive in 3D
+                bring values.
               </span>
               .
             </motion.h1>
