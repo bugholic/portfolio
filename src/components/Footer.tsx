@@ -83,7 +83,7 @@ export function Footer() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <a href="#" className="flex items-center gap-2 group">
             <img src="/logo/bugholic-logo.png" alt="Bugholic" className="h-7 w-7 object-contain opacity-50 group-hover:opacity-80 transition-opacity" />
-            <span className="text-white/25 text-xs tracking-wider font-mono group-hover:text-white/40 transition-colors">© 2026 Bugholic · Ayush</span>
+            <span className="text-white/25 text-xs tracking-wider font-mono group-hover:text-white/40 transition-colors">© 2026 Bugholic · Aayush</span>
           </a>
           <div className="flex gap-6">
             <a

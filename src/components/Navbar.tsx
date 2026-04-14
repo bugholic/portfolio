@@ -21,20 +21,20 @@ function MagneticNavLink({ href, children }: { href: string; children: React.Rea
 
 export function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 px-6 py-5 md:px-8">
-      <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/10 bg-black/20 px-5 py-4 backdrop-blur-xl">
+    <nav className="w-full z-50 px-6 py-5 md:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-center rounded-full px-5 py-4 backdrop-blur-xl">
         <a href="#" className="flex items-center gap-2.5">
-          <img src="/logo/bugholic-logo.png" alt="Bugholic" className="h-9 w-9 object-contain" />
-          <span className="font-mono text-[11px] tracking-widest text-white/60 uppercase">Bugholic</span>
+          <img src="/logo/bugholic-logo.png" alt="Bugholic" className="h-11 w-11 object-contain" />
+          <span className="font-mono text-[24px] tracking-widest text-white/60 uppercase">Bugholic</span>
         </a>
-        <div className="hidden gap-8 text-[11px] font-medium tracking-[0.2em] uppercase text-white/60 md:flex">
+        {/* <div className="hidden gap-8 text-[11px] font-medium tracking-[0.2em] uppercase text-white/60 md:flex">
           <MagneticNavLink href="#about">About</MagneticNavLink>
           <MagneticNavLink href="#experience">Experience</MagneticNavLink>
           <MagneticNavLink href="#projects">Projects</MagneticNavLink>
           <MagneticNavLink href="#stack">Stack</MagneticNavLink>
           <MagneticNavLink href="#contact">Contact</MagneticNavLink>
-        </div>
-        <div className="w-8 h-[1px] bg-accent" />
+        </div> */}
+        {/* <div className="w-8 h-[1px] bg-accent" /> */}
       </div>
     </nav>
   );

@@ -67,7 +67,7 @@ export function HeroSection() {
               transition={{ duration: 0.7, delay: 0.08 }}
               className="mt-6 font-mono text-sm tracking-[0.18em] text-white/40 uppercase"
             >
-              Hi, I'm Ayush —
+              Hi, I'm Aayush —
             </motion.p>
 
             <motion.h1
@@ -132,9 +132,9 @@ export function HeroSection() {
             className="mt-12 grid max-w-2xl gap-4 sm:grid-cols-3"
           >
             {[
-              { value: "3+", label: "Years in tech" },
-              { value: "60fps", label: "Performance goal" },
-              { value: "Remote", label: "Available now" },
+              { value: "2+", label: "Years in tech" },
+              { value: "5+", label: "Freelance Projects" },
+              { value: "3+", label: "Active Projects" },
             ].map((item) => (
               <div key={item.label} className="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl">
                 <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-accent">{item.value}</div>
@@ -165,7 +165,7 @@ export function HeroSection() {
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-white/35">Currently</p>
-                <h2 className="mt-2 text-xl font-semibold text-white">Ayush · FSE @ Softwelve</h2>
+                <h2 className="mt-2 text-xl font-semibold text-white">Aayush · Full Stack Engineer</h2>
               </div>
               <div className="rounded-2xl border border-accent/20 bg-accent/10 p-3 text-accent">
                 <BriefcaseBusiness size={18} />
@@ -195,12 +195,12 @@ export function HeroSection() {
           <div className="flex flex-wrap items-center gap-5">
             <span className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Render pipeline active
+              Available for work
             </span>
-            <span>Depth-mapped interface</span>
-            <span className="hidden md:inline">Realtime scene composition</span>
+            <span>Understanding of business logic</span>
+            <span className="hidden md:inline">Full stack projects</span>
           </div>
-          <div>Copyright 2026 Bugholic Engineering</div>
+          <div>Copyright 2026 Bugholic</div>
         </div>
       </div>
     </section>
