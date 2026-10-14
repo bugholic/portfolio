@@ -1,72 +1,43 @@
-import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
 import { ProjectCard } from "./ProjectCard";
-import { getPortfolioProjects, type PortfolioProject } from "../mvc/controllers/projects/ProjectsController";
-import { useScrollParallax } from "../hooks/useScrollParallax";
+import { profile, projects } from "../data/profile";
 
 export function ProjectsSection() {
-  const [projects, setProjects] = useState<PortfolioProject[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { ref, slowY } = useScrollParallax({ slow: 25 });
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function loadRepos() {
-      try {
-        setLoading(true);
-        const data = await getPortfolioProjects(controller.signal);
-        setProjects(data);
-      } catch (err) {
-        if (err instanceof DOMException && err.name === "AbortError") {
-          return;
-        }
-        setError("Could not load projects from GitHub.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadRepos();
-    return () => controller.abort();
-  }, []);
-
   return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    <section ref={ref as any} id="projects" className="scroll-mt-28 py-32 px-6 max-w-7xl mx-auto">
-      <motion.div style={{ y: slowY }}>
+    <section id="projects" className="scroll-mt-24 py-24 md:py-36">
+      <div className="container-x">
         <SectionHeader
-          title="Selected Works"
-          subtitle="Live repositories from my GitHub profile, focused on full-stack engineering and performance."
+          index="03"
+          label="Selected work"
+          aside={`${projects.length} projects · client & personal`}
+          title={
+            <>
+              Selected <span className="text-accent">works</span>
+            </>
+          }
         />
-      </motion.div>
 
-      {loading && (
-        <p className="text-center text-white/60 font-mono text-xs tracking-widest uppercase">Loading repositories...</p>
-      )}
-
-      {error && <p className="text-center text-red-300/90">{error}</p>}
-
-      {!loading && !error && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {projects.map((project) => (
-            <div key={project.id}>
-              <ProjectCard
-                name={project.name}
-                fullName={project.fullName}
-                description={project.description}
-                language={project.language}
-                stars={project.stars}
-                url={project.url}
-                liveUrl={project.liveUrl}
-                updatedAt={project.updatedAt}
-              />
-            </div>
+        <div className="grid gap-x-8 gap-y-20 md:grid-cols-2">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
-      )}
+
+        <div className="mt-24 flex justify-center">
+          <a
+            href={profile.socials.github}
+            target="_blank"
+            rel="noreferrer"
+            className="group inline-flex items-center gap-3 rounded-full border border-line bg-surface py-2 pl-6 pr-2 text-sm font-medium transition-colors hover:border-accent/50"
+          >
+            More experiments on GitHub
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent transition-transform group-hover:rotate-45">
+              <ArrowUpRight size={16} />
+            </span>
+          </a>
+        </div>
+      </div>
     </section>
   );
 }

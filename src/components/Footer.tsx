@@ -1,116 +1,138 @@
 import { motion } from "motion/react";
-import { Github, Linkedin, Twitter, ArrowRight } from "lucide-react";
-import { useScrollParallax } from "../hooks/useScrollParallax";
+import { ArrowUp, ArrowUpRight, Download } from "lucide-react";
+import { useMagneticEffect } from "../hooks/useMagneticEffect";
+import { profile } from "../data/profile";
 
-export function Footer() {
-  const { ref, slowY, midY } = useScrollParallax({ slow: 20, mid: 40 });
+const socials = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/ayuv" },
+  { label: "GitHub", href: "https://github.com/bugholic" },
+  { label: "Twitter / X", href: "https://x.com/vaayussh" },
+];
+
+const sitemap = [
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Work", href: "#projects" },
+  { label: "Stack", href: "#stack" },
+];
+
+function MagneticCta() {
+  const { ref, x, y, onMouseMove, onMouseLeave } = useMagneticEffect(0.25);
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    <footer ref={ref as any} id="contact" className="relative overflow-hidden border-t border-white/5">
-      {/* Parallax depth layers */}
-      <motion.div
-        style={{ y: slowY }}
-        className="pointer-events-none absolute -top-8 left-1/4 h-24 w-24 rounded-full bg-cyan-400/8 blur-3xl"
-      />
-      <motion.div
-        style={{ y: midY }}
-        className="pointer-events-none absolute -bottom-8 right-1/4 h-32 w-32 rounded-full bg-sky-500/8 blur-3xl"
-      />
+    <motion.a
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ref={ref as any}
+      href={`mailto:${profile.email}`}
+      style={{ x, y }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      className="flex h-36 w-36 shrink-0 flex-col items-center justify-center gap-1 rounded-full bg-accent text-sm font-medium text-white transition-colors hover:bg-accent-hover md:h-44 md:w-44"
+    >
+      <ArrowUpRight size={28} />
+      Let's talk
+    </motion.a>
+  );
+}
 
-      {/* CTA block */}
-      <div className="relative px-8 py-24 text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/35 mb-4"
-        >
-          Let's build something
-        </motion.p>
+export function Footer() {
+  return (
+    <footer id="contact" className="relative overflow-hidden bg-surface pt-24 md:pt-36">
+      <div className="pointer-events-none absolute -bottom-60 left-1/2 h-[480px] w-[900px] -translate-x-1/2 rounded-full bg-accent/20 blur-[140px]" />
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.06 }}
-          className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6"
-        >
-          Got a project in mind?
-        </motion.h2>
+      <div className="container-x relative">
+        <span className="eyebrow">
+          <span className="text-accent">(05)</span> Contact
+        </span>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45, delay: 0.12 }}
-          className="text-white/50 max-w-lg mx-auto mb-10 text-base md:text-lg leading-7"
-        >
-          I'm open to full-time roles, freelance work, and interesting collaborations. Reach out — I reply fast.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.18 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <a
-            href="https://www.linkedin.com/in/ayuv"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent px-6 py-3 text-sm font-medium text-slate-950 transition-transform duration-300 hover:-translate-y-0.5"
+        <div className="mt-8 flex flex-col gap-10 border-b border-line pb-16 md:flex-row md:items-end md:justify-between">
+          <motion.h2
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="font-display text-[clamp(3rem,9vw,8.5rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.05em]"
           >
-            Connect on LinkedIn
-            <ArrowRight size={16} />
-          </a>
-          <a
-            href="https://github.com/bugholic"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-6 py-3 text-sm font-medium text-white/80 backdrop-blur-md transition-transform duration-300 hover:-translate-y-0.5 hover:bg-white/10"
-          >
-            <Github size={15} />
-            View GitHub
-          </a>
-        </motion.div>
+            Got a project
+            <br />
+            <span className="text-accent">in mind?</span>
+          </motion.h2>
+          <MagneticCta />
+        </div>
+
+        <div className="grid gap-10 py-14 sm:grid-cols-2 md:grid-cols-4">
+          <div className="md:col-span-2">
+            <p className="max-w-sm text-[15px] leading-7 text-muted">
+              Open to full-time roles, freelance work and interesting collaborations. Reach out, I reply fast.
+            </p>
+            <a
+              href={`mailto:${profile.email}`}
+              className="mt-6 inline-block font-display text-2xl font-semibold tracking-tight underline decoration-accent decoration-2 underline-offset-8 transition-colors hover:text-accent md:text-3xl"
+            >
+              {profile.email}
+            </a>
+            <div className="mt-8">
+              <a
+                href={profile.cvUrl}
+                download
+                className="inline-flex items-center gap-2 rounded-full border border-line bg-bg px-5 py-3 text-sm font-medium text-white/85 transition-colors hover:border-accent/50"
+              >
+                Download CV <Download size={15} />
+              </a>
+            </div>
+          </div>
+          <div>
+            <p className="eyebrow mb-4">Socials</p>
+            <ul className="space-y-2">
+              {socials.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group inline-flex items-center gap-1 text-white/80 transition-colors hover:text-accent"
+                  >
+                    {s.label}
+                    <ArrowUpRight size={14} className="opacity-0 transition-opacity group-hover:opacity-100" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="eyebrow mb-4">Sitemap</p>
+            <ul className="space-y-2">
+              {sitemap.map((s) => (
+                <li key={s.label}>
+                  <a href={s.href} className="text-white/80 transition-colors hover:text-accent">
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="relative border-t border-white/5 px-8 py-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <a href="#" className="flex items-center gap-2 group">
-            <img src="/logo/bugholic-logo.png" alt="Bugholic" className="h-7 w-7 object-contain opacity-50 group-hover:opacity-80 transition-opacity" />
-            <span className="text-white/25 text-xs tracking-wider font-mono group-hover:text-white/40 transition-colors">© 2026 Bugholic · Aayush</span>
+      {/* Oversized brand wordmark */}
+      <div className="relative select-none overflow-hidden" aria-hidden>
+        <p className="translate-y-[18%] text-center font-display text-[21vw] font-extrabold uppercase leading-[0.8] tracking-[-0.06em] text-white/[0.04]">
+          Bugholic
+        </p>
+      </div>
+
+      <div className="relative border-t border-line">
+        <div className="container-x flex items-center justify-between py-6">
+          <a href="#" className="flex items-center gap-2">
+            <img src="/logo/bugholic-logo.png" alt="Bugholic" className="h-6 w-6 object-contain opacity-70" />
+            <span className="font-mono text-xs text-muted">© 2026 Bugholic · Aayush</span>
           </a>
-          <div className="flex gap-6">
-            <a
-              href="https://github.com/bugholic"
-              target="_blank"
-              rel="noreferrer"
-              className="text-white/35 hover:text-accent transition-colors flex items-center gap-2 text-xs uppercase tracking-widest"
-            >
-              <Github size={13} /> GitHub
-            </a>
-            <a
-              href="https://www.linkedin.com/in/ayuv"
-              target="_blank"
-              rel="noreferrer"
-              className="text-white/35 hover:text-accent transition-colors flex items-center gap-2 text-xs uppercase tracking-widest"
-            >
-              <Linkedin size={13} /> LinkedIn
-            </a>
-            <a
-              href="https://x.com/vaayussh"
-              target="_blank"
-              rel="noreferrer"
-              className="text-white/35 hover:text-accent transition-colors flex items-center gap-2 text-xs uppercase tracking-widest"
-            >
-              <Twitter size={13} /> Twitter
-            </a>
-          </div>
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-muted transition-colors hover:text-white"
+          >
+            Back to top <ArrowUp size={14} />
+          </a>
         </div>
       </div>
     </footer>

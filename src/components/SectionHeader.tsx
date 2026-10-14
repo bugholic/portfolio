@@ -1,31 +1,30 @@
 import { motion } from "motion/react";
 
 type SectionHeaderProps = {
-  title: string;
-  subtitle: string;
+  index: string;
+  label: string;
+  title: React.ReactNode;
+  aside?: React.ReactNode;
 };
 
-export function SectionHeader({ title, subtitle }: SectionHeaderProps) {
+export function SectionHeader({ index, label, title, aside }: SectionHeaderProps) {
   return (
-    <div className="mb-16 text-center">
+    <div className="mb-14 md:mb-20">
+      <div className="flex items-center justify-between border-t border-line pt-5">
+        <span className="eyebrow">
+          <span className="text-accent">({index})</span> {label}
+        </span>
+        {aside && <span className="eyebrow hidden sm:block">{aside}</span>}
+      </div>
       <motion.h2
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.12, margin: "0px 0px -18% 0px" }}
-        transition={{ duration: 0.45, ease: "easeOut" }}
-        className="text-4xl md:text-5xl font-bold mb-4 tracking-tight"
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="mt-8 max-w-5xl font-display text-[clamp(2.5rem,6.5vw,6rem)] font-bold uppercase leading-[0.92] tracking-[-0.04em]"
       >
         {title}
       </motion.h2>
-      <motion.p
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.12, margin: "0px 0px -18% 0px" }}
-        transition={{ delay: 0.06, duration: 0.42, ease: "easeOut" }}
-        className="text-white/50 max-w-2xl mx-auto text-lg"
-      >
-        {subtitle}
-      </motion.p>
     </div>
   );
 }
