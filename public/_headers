@@ -1,0 +1,12 @@
+# Netlify / Cloudflare Pages: point agents at the LLM-friendly files.
+/*
+  Link: </llms.txt>; rel="llms-txt"; type="text/plain", </llms.md>; rel="alternate"; type="text/markdown"; title="Full profile in Markdown", </sitemap.xml>; rel="sitemap"; type="application/xml"
+  X-Llms-Txt: /llms.txt
+  X-Llms-Md: /llms.md
+  X-Robots-Tag: all
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+
+/llms.md
+  Content-Type: text/markdown; charset=utf-8

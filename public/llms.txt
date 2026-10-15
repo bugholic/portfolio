@@ -1,0 +1,30 @@
+# Aayush Vishwakarma (Bugholic)
+
+> Full-stack developer based in Pune, India, with 3+ years building web, mobile and AI-powered products in JavaScript, TypeScript, React, Next.js, Node.js and Python. Currently a Full-Stack Developer at Greenmint Labs and open for freelance work: web apps, APIs and AI integrations, remote or on-site.
+
+This is a single-page portfolio. The full profile (experience, projects, skills, education and contact details) is available as one Markdown file, which is the best source for agents and LLMs.
+
+## Profile
+
+- [Full profile in Markdown](https://bugholic.is-a.dev/llms.md): experience, projects, skills, education and contact in one file
+- [Portfolio website](https://bugholic.is-a.dev/): the human-facing site
+- [CV (PDF)](https://bugholic.is-a.dev/Aayush-Vishwakarma-CV.pdf): downloadable résumé
+
+## Sections
+
+- [About](https://bugholic.is-a.dev/#about): who he is and how he works
+- [Experience](https://bugholic.is-a.dev/#experience): Greenmint Labs and Vellko Media, plus MCA and BCA education
+- [Projects](https://bugholic.is-a.dev/#projects): 8 selected client and personal projects
+- [Stack](https://bugholic.is-a.dev/#stack): core tools and workflow
+- [Contact](https://bugholic.is-a.dev/#contact): how to get in touch
+
+## Contact
+
+- [Email](mailto:ayushv2001@gmail.com): ayushv2001@gmail.com
+- [GitHub](https://github.com/bugholic): code and experiments
+- [LinkedIn](https://www.linkedin.com/in/ayuv): professional profile
+- [X / Twitter](https://x.com/vaayussh)
+
+## Optional
+
+- [Sitemap](https://bugholic.is-a.dev/sitemap.xml)

@@ -1,0 +1,10 @@
+# Portfolio of Aayush Vishwakarma (Bugholic). Crawlers and AI agents are welcome.
+#
+# LLM-friendly versions of this site:
+#   https://bugholic.is-a.dev/llms.txt  (index, llmstxt.org format)
+#   https://bugholic.is-a.dev/llms.md   (full profile in Markdown)
+
+User-agent: *
+Allow: /
+
+Sitemap: https://bugholic.is-a.dev/sitemap.xml
