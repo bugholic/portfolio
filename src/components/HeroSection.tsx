@@ -14,24 +14,11 @@ export function HeroSection() {
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-accent/15 blur-[140px]" />
 
       <div className="container-x relative flex flex-col items-center text-center">
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.05, ease }}
-          className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-xs text-white/75"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-          </span>
-          Available for freelance
-        </motion.span>
-
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease }}
-          className="mt-6 font-display text-[clamp(2.6rem,7vw,4.75rem)] font-bold leading-[1.02] tracking-[-0.04em]"
+          className="font-display text-[clamp(2.6rem,7vw,4.75rem)] font-bold leading-[1.02] tracking-[-0.04em]"
         >
           Hi, I'm <span className="text-accent">{firstName}</span>
         </motion.h1>
