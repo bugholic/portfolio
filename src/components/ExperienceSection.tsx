@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { GraduationCap } from "lucide-react";
+import { PixelCampus } from "./PixelCampus";
 import { SectionHeader } from "./SectionHeader";
 import { education, experiences } from "../data/profile";
 
@@ -83,13 +84,23 @@ export function ExperienceSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.6, delay: index * 0.08, ease }}
-                className="rounded-3xl border border-line bg-surface p-7"
+                className="group overflow-hidden rounded-3xl border border-line bg-surface transition-colors hover:border-accent/40"
               >
-                <p className="font-mono text-xs text-accent">{ed.years}</p>
-                <h3 className="mt-6 font-display text-xl font-semibold leading-snug tracking-tight">{ed.degree}</h3>
-                <p className="mt-2 text-sm text-muted">
-                  {ed.school} · {ed.location}
-                </p>
+                <div className="relative border-b border-line bg-[linear-gradient(180deg,#0d1124_0%,#161b30_55%,#1c2133_100%)] px-4 pt-6">
+                  <span className="absolute left-4 top-4 z-10 rounded-full border border-white/10 bg-bg/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/75 backdrop-blur">
+                    {ed.level}
+                  </span>
+                  <div className="transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]">
+                    <PixelCampus scene={ed.scene} />
+                  </div>
+                </div>
+                <div className="p-7">
+                  <p className="font-mono text-xs text-accent">{ed.years}</p>
+                  <h3 className="mt-4 font-display text-xl font-semibold leading-snug tracking-tight">{ed.degree}</h3>
+                  <p className="mt-2 text-sm text-muted">
+                    {ed.school} · {ed.location}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>

@@ -94,7 +94,7 @@ export function HeroPortrait() {
             className="flex items-center gap-2 rounded-full border border-white/10 bg-white px-3 py-2 text-bg shadow-xl"
           >
             <span className="h-2 w-2 rounded-full bg-accent" />
-            <span className="text-xs font-semibold">Open to work</span>
+            <span className="text-xs font-semibold">Open for freelance</span>
           </motion.div>
         </div>
 

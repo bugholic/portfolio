@@ -1,8 +1,7 @@
 import { motion } from "motion/react";
 import { Layers, Code2, Server, Braces, Database, Zap, Bot, Container, Cloud } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
-import { TechCard } from "./TechCard";
-import { skillGroups } from "../data/profile";
+import { SkillTree } from "./SkillTree";
 
 const stackItems = [
   { icon: Layers, title: "React & Next.js", description: "Fast, accessible interfaces with SSR, static generation and Expo for mobile." },
@@ -39,45 +38,32 @@ export function TechStackSection() {
           }
         />
 
-        <div className="grid gap-4 lg:grid-cols-12">
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col rounded-3xl border border-line bg-surface p-8 md:p-10 lg:col-span-4 lg:row-span-3"
-          >
+        <SkillTree skills={stackItems} />
+
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-4 grid gap-10 rounded-3xl border border-line bg-surface-2 p-8 md:p-10 lg:grid-cols-12"
+        >
+          <div className="lg:col-span-7">
             <span className="eyebrow">Core workflow</span>
             <p className="mt-6 font-display text-2xl font-medium leading-[1.3] tracking-tight">
               Frontend where motion feels sharp, backend where logic stays predictable, and automation where repetitive
               work should disappear.
             </p>
-
-            <dl className="mt-10 divide-y divide-line border-y border-line">
-              {skillGroups.map((stat) => (
-                <div key={stat.label} className="flex items-center justify-between gap-4 py-4">
-                  <dt className="eyebrow">{stat.label}</dt>
-                  <dd className="text-right text-sm text-white/85">{stat.value}</dd>
-                </div>
-              ))}
-            </dl>
-
-            <ol className="mt-10 space-y-4">
-              {workflowSteps.map((step, index) => (
-                <li key={step} className="flex gap-4">
-                  <span className="font-mono text-xs text-accent">0{index + 1}</span>
-                  <p className="text-sm leading-6 text-muted">{step}</p>
-                </li>
-              ))}
-            </ol>
-          </motion.div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-3">
-            {stackItems.map((item, index) => (
-              <TechCard key={item.title} icon={item.icon} title={item.title} description={item.description} index={index} />
-            ))}
           </div>
-        </div>
+
+          <ol className="space-y-4 self-end lg:col-span-5">
+            {workflowSteps.map((step, index) => (
+              <li key={step} className="flex gap-4">
+                <span className="font-mono text-xs text-accent">0{index + 1}</span>
+                <p className="text-sm leading-6 text-muted">{step}</p>
+              </li>
+            ))}
+          </ol>
+        </motion.div>
       </div>
     </section>
   );

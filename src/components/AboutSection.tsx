@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Bot, Code2, MapPin, Workflow } from "lucide-react";
+import { AiVisual, CraftVisual, ProductVisual } from "./PrincipleVisuals";
 import { SectionHeader } from "./SectionHeader";
 import { profile } from "../data/profile";
 
@@ -13,9 +14,27 @@ const reveal = (delay = 0) => ({
 });
 
 const principles = [
-  { icon: Code2, title: "Engineer by craft", text: "Software design across web, mobile and APIs, owned end to end." },
-  { icon: Workflow, title: "Product-minded", text: "Agile delivery, team and product management, client to launch." },
-  { icon: Bot, title: "AI in the loop", text: "RAG pipelines, LLM agents and MCP integrations that do real work." },
+  {
+    icon: Code2,
+    title: "Engineer by craft",
+    text: "Software design across web, mobile and APIs, owned end to end.",
+    visual: CraftVisual,
+    tone: "border-line bg-surface",
+  },
+  {
+    icon: Workflow,
+    title: "Product-minded",
+    text: "Agile delivery, team and product management, client to launch.",
+    visual: ProductVisual,
+    tone: "border-line bg-surface-2",
+  },
+  {
+    icon: Bot,
+    title: "AI in the loop",
+    text: "RAG pipelines, LLM agents and MCP integrations that do real work.",
+    visual: AiVisual,
+    tone: "border-accent/25 bg-[linear-gradient(160deg,rgba(61,107,255,0.14),#18191d_55%)]",
+  },
 ];
 
 const topSkills = ["Engineering", "Software Design", "Agile", "Team Management", "Product Management"];
@@ -74,13 +93,18 @@ export function AboutSection() {
             <motion.div
               key={p.title}
               {...reveal(0.1 + i * 0.08)}
-              className="group rounded-3xl border border-line bg-surface p-7 transition-colors hover:border-accent/40 md:col-span-2"
+              className={`group flex flex-col rounded-3xl border p-5 transition-colors hover:border-accent/40 md:col-span-2 ${p.tone}`}
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent-soft text-accent transition-transform duration-300 group-hover:-rotate-6">
-                <p.icon size={20} />
+              <div className="h-[184px] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1">
+                <p.visual />
               </div>
-              <h3 className="mt-10 font-display text-xl font-semibold tracking-tight">{p.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">{p.text}</p>
+              <div className="mt-6 flex items-center gap-3 px-2">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent-soft text-accent transition-transform duration-300 group-hover:-rotate-6">
+                  <p.icon size={16} />
+                </span>
+                <h3 className="font-display text-xl font-semibold tracking-tight">{p.title}</h3>
+              </div>
+              <p className="mt-2 px-2 pb-2 text-sm leading-6 text-muted">{p.text}</p>
             </motion.div>
           ))}
 
@@ -105,10 +129,10 @@ export function AboutSection() {
             {...reveal(0.2)}
             className="flex flex-col justify-between gap-6 rounded-3xl border border-line bg-surface-2 p-7 md:col-span-4"
           >
-            <span className="eyebrow">Open to work</span>
+            <span className="eyebrow">Open for freelance</span>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <p className="max-w-md font-display text-2xl font-semibold leading-tight tracking-tight">
-                On-site, hybrid or remote. Full-time roles and freelance builds.
+                Freelance builds, remote or on-site. Web apps, APIs and AI integrations.
               </p>
               <span className="inline-flex items-center gap-2 text-sm text-white/80">
                 <MapPin size={16} className="text-accent" />

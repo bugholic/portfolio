@@ -53,12 +53,16 @@ export const education = [
     school: "Oriental Institute of Science and Technology",
     years: "2023 — 2025",
     location: "Bhopal",
+    level: "Master's",
+    scene: "university" as const,
   },
   {
     degree: "Bachelor of Computer Applications (BCA)",
     school: "NRI Group of Institutions",
     years: "2020 — 2023",
     location: "Bhopal",
+    level: "Bachelor's",
+    scene: "college" as const,
   },
 ];
 
@@ -139,13 +143,4 @@ export const projects: Project[] = [
     cover: "scrollface",
     repo: "https://github.com/bugholic/scroll-face",
   },
-];
-
-export const skillGroups = [
-  { label: "Languages", value: "JavaScript, TypeScript, Python" },
-  { label: "Frontend", value: "React, Next.js, Expo" },
-  { label: "Backend", value: "Node.js, Express, REST APIs" },
-  { label: "Data", value: "MongoDB, PostgreSQL, SQLite, Convex, Qdrant, Redis" },
-  { label: "AI & DevOps", value: "RAG, LLMs, MCP, AI agents, Docker, GitHub Actions" },
-  { label: "Cloud", value: "GCP, AWS (EC2, S3)" },
 ];

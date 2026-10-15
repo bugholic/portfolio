@@ -35,6 +35,12 @@
     scroll-behavior: smooth;
   }
 
+  /* Decorative glows and covers must never widen the page on phones */
+  html,
+  body {
+    overflow-x: clip;
+  }
+
   body {
     @apply bg-bg text-white font-sans antialiased selection:bg-accent selection:text-white;
   }
@@ -51,6 +57,109 @@
 
   .grain {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+}
+
+/* Skill tree: leaves sway gently once grown */
+.leaf-sway {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: leaf-sway 5s ease-in-out infinite;
+}
+
+@keyframes leaf-sway {
+  0%,
+  100% {
+    rotate: -1.6deg;
+  }
+  50% {
+    rotate: 1.6deg;
+  }
+}
+
+/* About cards */
+.caret {
+  animation: caret 1s steps(1) infinite;
+}
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+.flow-dash {
+  animation: flow-dash 1.2s linear infinite;
+}
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -8;
+  }
+}
+
+/* Pixel campus scenes */
+.px-twinkle {
+  animation: px-twinkle 2.4s steps(2, jump-none) infinite;
+}
+.px-delay-1 {
+  animation-delay: -0.8s;
+}
+.px-delay-2 {
+  animation-delay: -1.6s;
+}
+.px-flicker {
+  animation: px-flicker 6s steps(1) infinite;
+}
+.px-flag-a {
+  animation: px-frame 0.9s steps(1) infinite;
+}
+.px-flag-b {
+  animation: px-frame 0.9s steps(1) infinite;
+  animation-delay: -0.45s;
+}
+.px-tick {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  animation: px-tick 4s steps(4) infinite;
+}
+.px-drift {
+  animation: px-drift 18s steps(60) infinite alternate;
+}
+
+@keyframes px-twinkle {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.15;
+  }
+}
+@keyframes px-flicker {
+  0%,
+  62%,
+  70%,
+  100% {
+    opacity: 1;
+  }
+  64%,
+  68% {
+    opacity: 0.35;
+  }
+}
+@keyframes px-frame {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes px-tick {
+  to {
+    rotate: 360deg;
+  }
+}
+@keyframes px-drift {
+  to {
+    translate: 60px 0;
   }
 }
 

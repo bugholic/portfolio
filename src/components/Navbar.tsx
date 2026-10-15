@@ -190,10 +190,7 @@ export function Navbar() {
               alt="Bugholic"
               className="h-10 w-10 object-contain transition-transform duration-500 group-hover:rotate-[-12deg]"
             />
-            <span className="leading-tight">
-              <span className="block font-display text-sm font-bold uppercase tracking-[0.18em]">Bugholic</span>
-              <span className="block font-mono text-[10px] text-muted">by Aayush Vishwakarma</span>
-            </span>
+            <span className="font-display text-sm font-bold uppercase tracking-[0.18em]">Bugholic</span>
           </a>
 
           <p className="eyebrow hidden md:block">

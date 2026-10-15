@@ -63,7 +63,7 @@ export function Footer() {
         <div className="grid gap-10 py-14 sm:grid-cols-2 md:grid-cols-4">
           <div className="md:col-span-2">
             <p className="max-w-sm text-[15px] leading-7 text-muted">
-              Open to full-time roles, freelance work and interesting collaborations. Reach out, I reply fast.
+              Open for freelance projects and interesting collaborations. Reach out, I reply fast.
             </p>
             <a
               href={`mailto:${profile.email}`}

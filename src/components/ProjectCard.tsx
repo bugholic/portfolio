@@ -13,7 +13,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.7, delay: (index % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className={`group ${index % 2 === 1 ? "md:mt-28" : ""}`}
+      className={`group min-w-0 ${index % 2 === 1 ? "md:mt-28" : ""}`}
     >
       <CoverWrapper
         {...(href ? { href, target: "_blank", rel: "noreferrer" } : {})}
