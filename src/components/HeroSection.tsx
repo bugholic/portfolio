@@ -101,12 +101,8 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.65, ease }}
-            className="flex flex-col justify-between gap-8 lg:col-span-3 lg:col-start-7"
+            className="flex flex-col justify-end lg:col-span-3 lg:col-start-7"
           >
-            <p className="text-[15px] leading-7 text-muted">
-              Full-stack developer at {profile.company}. Web, mobile and AI-powered products with React, Next.js,
-              Node.js and Python, from RAG pipelines to real-time dashboards.
-            </p>
             <dl className="grid grid-cols-3 gap-4 border-t border-line pt-6">
               {stats.map((s) => (
                 <div key={s.label}>

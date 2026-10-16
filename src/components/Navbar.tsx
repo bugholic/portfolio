@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUpRight, Download } from "lucide-react";
+import { ArrowUpRight, Download, Moon, Sun } from "lucide-react";
 import { useMagneticEffect } from "../hooks/useMagneticEffect";
+import { useTheme } from "../hooks/useTheme";
 import { profile } from "../data/profile";
 
 const ease = [0.76, 0, 0.24, 1] as const;
@@ -69,6 +70,34 @@ function MenuButton({ open, onClick }: { open: boolean; onClick: () => void }) {
         />
       </span>
     </motion.button>
+  );
+}
+
+function ThemeToggle() {
+  const { theme, toggle } = useTheme();
+  const dark = theme === "dark";
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
+      title={dark ? "Light theme" : "Dark theme"}
+      className="relative flex h-[52px] w-[52px] items-center justify-center overflow-hidden rounded-full border border-line bg-surface text-white transition-colors hover:border-accent/50"
+    >
+      <AnimatePresence initial={false} mode="wait">
+        <motion.span
+          key={theme}
+          initial={{ y: 18, rotate: -90, opacity: 0 }}
+          animate={{ y: 0, rotate: 0, opacity: 1 }}
+          exit={{ y: -18, rotate: 90, opacity: 0 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="flex"
+        >
+          {dark ? <Sun size={18} /> : <Moon size={18} />}
+        </motion.span>
+      </AnimatePresence>
+    </button>
   );
 }
 
@@ -197,7 +226,10 @@ export function Navbar() {
             Code to evolve <span className="text-accent">/</span> innovate to assist
           </p>
 
-          <MenuButton open={false} onClick={() => setOpen(true)} />
+          <div className="flex items-center gap-2.5">
+            <ThemeToggle />
+            <MenuButton open={false} onClick={() => setOpen(true)} />
+          </div>
         </motion.div>
       </header>
 

@@ -15,7 +15,7 @@ const codeLines: { indent: number; tokens: [string, string][] }[] = [
 
 export function CraftVisual() {
   return (
-    <div className="h-full rounded-2xl border border-white/10 bg-[#121317] font-mono text-[11px] leading-[1.9]">
+    <div className="theme-dark h-full rounded-2xl border border-white/10 bg-[#121317] font-mono text-[11px] leading-[1.9]">
       <div className="flex items-center gap-1.5 border-b border-white/5 px-3 py-2">
         <span className="h-2 w-2 rounded-full bg-white/15" />
         <span className="h-2 w-2 rounded-full bg-white/15" />
@@ -54,7 +54,7 @@ const milestones = ["Brief", "Plan", "Build", "Launch"];
 
 export function ProductVisual() {
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-white/10 bg-[#121317] p-4">
+    <div className="theme-dark flex h-full flex-col justify-between rounded-2xl border border-white/10 bg-[#121317] p-4">
       <div className="flex items-center justify-between font-mono text-[9px] uppercase tracking-[0.18em] text-white/40">
         <span>Roadmap · Q3</span>
         <span className="rounded-full bg-emerald-400/10 px-2 py-0.5 text-emerald-300/90">On track</span>
@@ -122,7 +122,7 @@ const satellites = [
 
 export function AiVisual() {
   return (
-    <div className="relative h-full overflow-hidden rounded-2xl border border-white/10 bg-[#121317]">
+    <div className="theme-dark relative h-full overflow-hidden rounded-2xl border border-white/10 bg-[#121317]">
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
         {satellites.map((s) => (
           <line

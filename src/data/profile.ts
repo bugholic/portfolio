@@ -7,7 +7,7 @@ export const profile = {
   location: "Pune, India",
   email: "ayushv2001@gmail.com",
   cvUrl: "/Aayush-Vishwakarma-CV.pdf",
-  photo: "/images/aayush.jpg",
+  photo: "/images/aayush-ghibli.webp",
   tagline: "Code to evolve, innovate to assist.",
   socials: {
     linkedin: "https://www.linkedin.com/in/ayuv",

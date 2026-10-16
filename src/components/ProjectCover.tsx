@@ -14,7 +14,7 @@ export type CoverKey =
 
 function Frame({ children, label }: { children: React.ReactNode; label: string }) {
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#15161a]">
+    <div className="theme-dark relative h-full w-full overflow-hidden bg-[#15161a]">
       {/* grid + glow */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]" />
       <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/30 blur-[90px] transition-transform duration-700 group-hover:scale-125" />

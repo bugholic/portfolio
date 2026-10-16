@@ -28,13 +28,13 @@ export function HeroPortrait() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-[340px] pt-[30%] [perspective:1100px]" onPointerMove={handleMove} onPointerLeave={reset}>
+    <div className="mx-auto w-full max-w-[340px] pt-[42%] lg:pt-[30%] [perspective:1100px]" onPointerMove={handleMove} onPointerLeave={reset}>
       <motion.div
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.6, ease }}
-        className="group relative aspect-[4/5] w-full"
+        className="theme-dark group relative aspect-[4/5] w-full"
       >
         {/* Layer 0: frame */}
         <div className="absolute inset-0 overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,#4a76ff_0%,#2a4fd6_45%,#16204a_100%)] shadow-[0_40px_80px_-30px_rgba(61,107,255,0.6)]">
@@ -61,12 +61,12 @@ export function HeroPortrait() {
           style={{ transform: "translateZ(70px)" }}
         >
           <motion.img
-            src="/images/aayush-lego.webp"
-            alt={`${profile.name} built from LEGO bricks`}
+            src="/images/aayush-ghibli.webp"
+            alt={`${profile.name}, illustrated in a hand-painted anime style`}
             initial={{ y: "35%" }}
             animate={{ y: 0 }}
             transition={{ type: "spring", stiffness: 90, damping: 14, delay: 0.9 }}
-            className="absolute left-1/2 top-[3%] w-[66%] max-w-none -translate-x-1/2 drop-shadow-[0_24px_30px_rgba(0,0,0,0.55)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+            className="absolute left-1/2 top-[2%] w-[84%] max-w-none -translate-x-1/2 drop-shadow-[0_24px_30px_rgba(0,0,0,0.55)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
           />
         </div>
 

@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wdth,wght@6..144,25..151,100..1000&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Google Sans Flex", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Google Sans Flex", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   /* Dark grey foundation */
@@ -30,9 +30,44 @@
   }
 }
 
+/* Light theme: the same tokens, re-pointed. `white` is the ink colour across the site. */
+:root[data-theme="light"] {
+  --color-bg: #f2f3f6;
+  --color-surface: #ffffff;
+  --color-surface-2: #e8eaf0;
+  --color-line: rgba(17, 20, 32, 0.1);
+  --color-muted: #5b606b;
+  --color-white: #14161b;
+  --color-accent: #3460f5;
+  --color-accent-soft: rgba(52, 96, 245, 0.1);
+  color-scheme: light;
+}
+
+/* Text sitting on the blue accent stays white in both themes */
+:root[data-theme="light"] .bg-accent {
+  --color-white: #ffffff;
+  color: #ffffff;
+}
+
+/* Illustrations of dark product UI stay dark, like screenshots of a device */
+:root[data-theme="light"] .theme-dark {
+  --color-bg: #111215;
+  --color-surface: #18191d;
+  --color-surface-2: #202227;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-muted: #8b8f98;
+  --color-white: #ffffff;
+  color: #ffffff;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    scrollbar-color: color-mix(in srgb, var(--color-muted) 45%, transparent) var(--color-bg);
+  }
+
+  body {
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 
   /* Decorative glows and covers must never widen the page on phones */
@@ -42,11 +77,27 @@
   }
 
   body {
-    @apply bg-bg text-white font-sans antialiased selection:bg-accent selection:text-white;
+    @apply bg-bg text-white font-sans antialiased;
+  }
+
+  /* Literal white: `white` is the ink token and turns dark in the light theme */
+  ::selection {
+    background: var(--color-accent);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
   }
 }
 
 @layer components {
+  /* Headlines use the same family, slightly condensed for tight display setting */
+  .font-display {
+    font-stretch: 88%;
+  }
+
   .container-x {
     @apply mx-auto w-full max-w-[1320px] px-5 md:px-10;
   }
@@ -57,6 +108,114 @@
 
   .grain {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+}
+
+/* The 3D world stays fixed while the page flies through it. */
+.journey-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.journey-stop {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Keep long-form content readable over the scene */
+.journey-stop:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  --veil: color-mix(in srgb, var(--color-bg) 80%, transparent);
+  --veil-edge: color-mix(in srgb, var(--color-bg) 25%, transparent);
+  background: linear-gradient(180deg, var(--veil-edge), var(--veil) 12%, var(--veil) 88%, var(--veil-edge));
+}
+
+/* Tunnel between sections: tall scroll runway with a pinned stage */
+.journey-gate {
+  position: relative;
+  height: 210vh;
+  pointer-events: none;
+}
+
+.journey-gate__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: clip;
+}
+
+.journey-gate__stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 35%, color-mix(in srgb, var(--color-bg) 55%, transparent) 100%);
+}
+
+.journey-gate__copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  text-align: center;
+  opacity: 0;
+  text-shadow: 0 2px 30px var(--color-bg);
+}
+
+/* A soft pool of background behind the title so tunnel geometry never cuts through it */
+.journey-gate__copy::before {
+  content: "";
+  position: absolute;
+  inset: -35% -25%;
+  z-index: -1;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--color-bg) 78%, transparent), transparent);
+}
+
+.journey-gate__index {
+  color: var(--gate-hue, #94a9e7);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.journey-gate__destination {
+  font-family: var(--font-display);
+  font-stretch: 88%;
+  font-size: clamp(2.6rem, 8vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.journey-gate__caption {
+  max-width: 40ch;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.journey-gate__line {
+  width: 1px;
+  height: 70px;
+  background: linear-gradient(var(--gate-hue, #7390ff), transparent);
+}
+
+@media (max-width: 640px) {
+  .journey-gate {
+    height: 170vh;
   }
 }
 
@@ -164,6 +323,23 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .journey-gate {
+    height: 180px;
+  }
+
+  .journey-gate__stage {
+    position: static;
+    height: 100%;
+  }
+
+  .journey-gate__copy {
+    opacity: 1;
+  }
+
+  .journey-gate__line {
+    height: 28px;
+  }
+
   *,
   *::before,
   *::after {
