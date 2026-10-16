@@ -111,112 +111,56 @@
   }
 }
 
-/* The 3D world stays fixed while the page flies through it. */
-.journey-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.journey-stop {
+/* Horizontal journey: a tall runway pins the viewport while the track slides sideways */
+.hs {
   position: relative;
-  isolation: isolate;
 }
 
-/* Keep long-form content readable over the scene */
-.journey-stop:not(:first-child)::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  --veil: color-mix(in srgb, var(--color-bg) 80%, transparent);
-  --veil-edge: color-mix(in srgb, var(--color-bg) 25%, transparent);
-  background: linear-gradient(180deg, var(--veil-edge), var(--veil) 12%, var(--veil) 88%, var(--veil-edge));
-}
-
-/* Tunnel between sections: tall scroll runway with a pinned stage */
-.journey-gate {
-  position: relative;
-  height: 210vh;
-  pointer-events: none;
-}
-
-.journey-gate__stage {
+.hs-viewport {
   position: sticky;
   top: 0;
   height: 100vh;
   height: 100svh;
-  display: grid;
-  place-items: center;
-  overflow: clip;
+  overflow: hidden;
 }
 
-.journey-gate__stage::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at center, transparent 35%, color-mix(in srgb, var(--color-bg) 55%, transparent) 100%);
-}
-
-.journey-gate__copy {
-  position: relative;
-  z-index: 1;
+.hs-track {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
-  text-align: center;
-  opacity: 0;
-  text-shadow: 0 2px 30px var(--color-bg);
+  height: 100%;
+  will-change: transform;
 }
 
-/* A soft pool of background behind the title so tunnel geometry never cuts through it */
-.journey-gate__copy::before {
-  content: "";
+/* Each section reads top to bottom inside its own frame; the page scroll drives scrollTop */
+.hs-panel {
+  position: relative;
+}
+
+.hs .hs-panel {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.hs .hs-panel + .hs-panel {
+  border-left: 1px solid var(--color-line);
+}
+
+.hs-progress {
   position: absolute;
-  inset: -35% -25%;
-  z-index: -1;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--color-bg) 78%, transparent), transparent);
+  inset: auto 0 0 0;
+  z-index: 30;
+  height: 2px;
+  background: var(--color-line);
+  pointer-events: none;
 }
 
-.journey-gate__index {
-  color: var(--gate-hue, #94a9e7);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-}
-
-.journey-gate__destination {
-  font-family: var(--font-display);
-  font-stretch: 88%;
-  font-size: clamp(2.6rem, 8vw, 7rem);
-  font-weight: 800;
-  letter-spacing: -0.06em;
-  line-height: 0.95;
-  text-transform: uppercase;
-}
-
-.journey-gate__caption {
-  max-width: 40ch;
-  color: var(--color-muted);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.journey-gate__line {
-  width: 1px;
-  height: 70px;
-  background: linear-gradient(var(--gate-hue, #7390ff), transparent);
-}
-
-@media (max-width: 640px) {
-  .journey-gate {
-    height: 170vh;
-  }
+.hs-progress__bar {
+  height: 100%;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
 }
 
 /* Skill tree: leaves sway gently once grown */
@@ -323,23 +267,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .journey-gate {
-    height: 180px;
-  }
-
-  .journey-gate__stage {
-    position: static;
-    height: 100%;
-  }
-
-  .journey-gate__copy {
-    opacity: 1;
-  }
-
-  .journey-gate__line {
-    height: 28px;
-  }
-
   *,
   *::before,
   *::after {

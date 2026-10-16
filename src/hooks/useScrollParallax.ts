@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useScroll, useTransform } from "motion/react";
+import { usePanelScroller } from "../components/HorizontalScroll";
 
 type Speeds = {
   slow?: number;
@@ -11,7 +12,10 @@ export function useScrollParallax(speeds: Speeds = {}) {
   const { slow = 30, mid = 60, fast = 100 } = speeds;
   const ref = useRef<HTMLElement>(null);
 
+  const container = usePanelScroller() ?? undefined;
+
   const { scrollYProgress } = useScroll({
+    container,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     target: ref as any,
     offset: ["start end", "end start"],

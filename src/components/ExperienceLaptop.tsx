@@ -1,5 +1,6 @@
 import { motion, useMotionTemplate, useScroll, useSpring, useTransform, type MotionValue } from "motion/react";
 import { useRef } from "react";
+import { usePanelScroller } from "./HorizontalScroll";
 import { experiences } from "../data/profile";
 
 /*
@@ -30,7 +31,8 @@ const slug = (company: string) => company.toLowerCase().replace(/\s+/g, "-");
 
 export function ExperienceLaptop() {
   const runway = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: runway, offset: ["start start", "end end"] });
+  const container = usePanelScroller() ?? undefined;
+  const { scrollYProgress } = useScroll({ container, target: runway, offset: ["start start", "end end"] });
   // A little smoothing so wheel steps don't make the lid stutter.
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 28, mass: 0.4 });
   const count = experiences.length;

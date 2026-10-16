@@ -40,7 +40,7 @@ export function TechStackSection() {
 
         <SkillTree skills={stackItems} />
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
@@ -63,7 +63,7 @@ export function TechStackSection() {
               </li>
             ))}
           </ol>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
