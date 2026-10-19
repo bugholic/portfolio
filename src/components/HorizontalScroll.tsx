@@ -59,6 +59,7 @@ export function HorizontalScroll({ children }: { children: React.ReactNode }) {
     let layout: Layout = [];
     let total = 0;
     let frame = 0;
+    const idle: boolean[] = [];
 
     // Each panel owns a vertical stretch (its overflow) followed by one viewport width of sideways travel.
     const measure = () => {
@@ -71,6 +72,19 @@ export function HorizontalScroll({ children }: { children: React.ReactNode }) {
       });
       total = cursor;
       runwayEl.style.height = `${total + window.innerHeight}px`;
+      const debugText = layout
+        .map((e, i) => `${i}: v=${e.vertical} sh=${panels[i].scrollHeight} ch=${panels[i].clientHeight}`)
+        .join("  ||  ");
+      document.title = debugText;
+      let debugEl = document.getElementById("hs-debug");
+      if (!debugEl) {
+        debugEl = document.createElement("pre");
+        debugEl.id = "hs-debug";
+        debugEl.style.cssText =
+          "position:fixed;left:0;bottom:0;z-index:9999;background:#000;color:#0f0;font:11px monospace;padding:6px;margin:0;white-space:pre-wrap;max-width:100vw;";
+        document.body.appendChild(debugEl);
+      }
+      debugEl.textContent = `vw=${window.innerWidth} vh=${window.innerHeight}\n${debugText}`;
     };
 
     const update = () => {
@@ -85,6 +99,17 @@ export function HorizontalScroll({ children }: { children: React.ReactNode }) {
       });
       trackEl.style.transform = `translate3d(${-x}px, 0, 0)`;
       if (progress.current) progress.current.style.transform = `scaleX(${total ? scrolled / total : 0})`;
+
+      // Pause decorative loops in panels that are off screen. They sit in the
+      // same composited 600vw layer as everything else, so an animation still
+      // running off to the right would repaint the whole track every frame.
+      panels.forEach((panel, index) => {
+        const offscreen = !(index * vw < x + vw && (index + 1) * vw > x);
+        if (idle[index] === offscreen) return;
+        idle[index] = offscreen;
+        if (offscreen) panel.dataset.idle = "";
+        else delete panel.dataset.idle;
+      });
     };
 
     const schedule = () => {

@@ -20,7 +20,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         className="relative block aspect-[16/11] overflow-hidden rounded-3xl border border-line"
       >
         <ProjectCover cover={project.cover} />
-        <span className="absolute left-4 top-4 rounded-full bg-bg/70 px-3 py-1 font-mono text-[11px] text-white/80 backdrop-blur-md">
+        <span className="absolute left-4 top-4 rounded-full bg-bg/85 px-3 py-1 font-mono text-[11px] text-white/80">
           {String(index + 1).padStart(2, "0")}
         </span>
         {href && (

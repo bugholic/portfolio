@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { GraduationCap } from "lucide-react";
-import { ExperienceLaptop } from "./ExperienceLaptop";
+import { ExperienceLog } from "./ExperienceLog";
 import { PixelCampus } from "./PixelCampus";
 import { SectionHeader } from "./SectionHeader";
 import { education, experiences } from "../data/profile";
@@ -24,7 +24,7 @@ export function ExperienceSection() {
         />
       </div>
 
-      {reducedMotion ? <ExperienceList /> : <ExperienceLaptop />}
+      {reducedMotion ? <ExperienceList /> : <ExperienceLog />}
 
       <div className="container-x">
         <EducationGrid />
@@ -108,7 +108,7 @@ function EducationGrid() {
             className="group overflow-hidden rounded-3xl border border-line bg-surface transition-colors hover:border-accent/40"
           >
             <div className="theme-dark relative border-b border-line bg-[linear-gradient(180deg,#0d1124_0%,#161b30_55%,#1c2133_100%)] px-4 pt-6">
-              <span className="absolute left-4 top-4 z-10 rounded-full border border-white/10 bg-bg/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/75 backdrop-blur">
+              <span className="absolute left-4 top-4 z-10 rounded-full border border-white/10 bg-bg/80 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/75">
                 {ed.level}
               </span>
               <div className="transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]">

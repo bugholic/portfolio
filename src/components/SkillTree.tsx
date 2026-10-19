@@ -1,6 +1,17 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  AnimatePresence,
+  animate,
+  motion,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
 import type { LucideIcon } from "lucide-react";
+import { usePanelScroller } from "./HorizontalScroll";
 
 export type Skill = { icon: LucideIcon; title: string; description: string };
 
@@ -133,182 +144,323 @@ function titleLines(title: string, room: number, fontSize: number) {
   return best;
 }
 
-const BRANCH_START = 0.7;
-const LEAF_START = 1.25;
+/* ---------- scroll-driven growth ---------- */
 
-const grow = { initial: { pathLength: 0 }, whileInView: { pathLength: 1 }, viewport: { once: true, amount: 0.25 } };
+/*
+ * Growth is a single 0 -> 1 value that every stem, branch and leaf reads with
+ * its own slice of the timeline, so new wood appears as you scroll instead of
+ * on a timer. On desktop the panel pins the tree to the viewport for ~130vh, so
+ * the tree is always fully grown before the panel slides sideways; on phones
+ * the same value is animated once when the tree scrolls into view.
+ */
+
+type Growth = MotionValue<number>;
+
+const GROW_START = 0.06;
+const GROW_END = 0.86;
+
+const WINDOWS = {
+  ground: [0, 0.05],
+  roots: [0.02, 0.13],
+  trunk: [0.06, 0.24],
+  leader: [0.22, 0.42],
+  branchLead: 0.38,
+  branchStep: 0.021,
+  branchDur: 0.15,
+  sproutLead: 0.44,
+  sproutStep: 0.012,
+  sproutDur: 0.13,
+  leafLead: 0.46,
+  leafStep: 0.026,
+  leafDur: 0.2,
+} as const;
+
+const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
+const smoothstep = (value: number) => value * value * (3 - 2 * value);
+
+/** Map the shared growth value through this element's slice of the timeline. */
+function useGrowthWindow(growth: Growth, from: number, to: number) {
+  return useTransform(growth, [from, to], [0, 1], { clamp: true });
+}
+
+function GrowPath({
+  growth,
+  from,
+  to,
+  d,
+  stroke,
+  strokeWidth,
+  transform,
+  style,
+}: {
+  growth: Growth;
+  from: number;
+  to: number;
+  d: string;
+  stroke: string;
+  strokeWidth: number;
+  transform?: string;
+  style?: CSSProperties;
+}) {
+  const drawn = useGrowthWindow(growth, from, to);
+  return (
+    <motion.path
+      d={d}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      fill="none"
+      transform={transform}
+      style={{ ...style, pathLength: drawn } as CSSProperties}
+    />
+  );
+}
+
+function Branch({
+  growth,
+  index,
+  from,
+  to,
+  stroke,
+  strokeWidth,
+}: {
+  growth: Growth;
+  index: number;
+  from: Pt;
+  to: Pt;
+  stroke: string;
+  strokeWidth: number;
+}) {
+  const start = WINDOWS.branchLead + index * WINDOWS.branchStep;
+  const drawn = useGrowthWindow(growth, start, start + WINDOWS.branchDur);
+  return (
+    <motion.path
+      d={branchPath(from, to)}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      fill="none"
+      style={{ transition: "stroke 300ms", pathLength: drawn } as CSSProperties}
+    />
+  );
+}
+
+function Sprout({
+  growth,
+  index,
+  sprout,
+}: {
+  growth: Growth;
+  index: number;
+  sprout: Sprout;
+}) {
+  const start = WINDOWS.sproutLead + index * WINDOWS.sproutStep;
+  const grown = useGrowthWindow(growth, start, start + WINDOWS.sproutDur);
+  return (
+    <g transform={`translate(${sprout.x} ${sprout.y}) rotate(${sprout.angle})`}>
+      <motion.path
+        d={lens(26, 12)}
+        transform="translate(0 -6)"
+        fill={index % 2 ? "rgba(61,107,255,0.6)" : "rgba(61,107,255,0.35)"}
+        style={{ originX: 0, originY: 0.5, scale: grown }}
+      />
+    </g>
+  );
+}
+
+function SkillLeaf({
+  growth,
+  index,
+  spot,
+  skill,
+  active,
+  onActive,
+  layout,
+}: {
+  growth: Growth;
+  index: number;
+  spot: { at: Pt; from: Pt };
+  skill: Skill;
+  active: boolean;
+  onActive: () => void;
+  layout: TreeLayout;
+}) {
+  const { leafW, leafH, fontSize } = layout;
+  const start = WINDOWS.leafLead + index * WINDOWS.leafStep;
+  const grown = useGrowthWindow(growth, start, start + WINDOWS.leafDur);
+  const rotate = useTransform(grown, [0, 1], [-18, 0]);
+
+  const Icon = skill.icon;
+  const iconSize = fontSize + 3.5;
+  const textX = leafW * 0.14 + iconSize + 7;
+  const lines = titleLines(skill.title, leafW - textX - 6, fontSize);
+  const lineH = fontSize * 1.15;
+
+  return (
+    <g
+      transform={`translate(${spot.at[0] - leafW / 2} ${spot.at[1] - leafH / 2})`}
+      role="listitem"
+      tabIndex={0}
+      aria-label={`${skill.title}: ${skill.description}`}
+      onMouseEnter={onActive}
+      onFocus={onActive}
+      onClick={onActive}
+      className="cursor-pointer outline-none"
+    >
+      <motion.g style={{ originX: 0.5, originY: 0.5, scale: grown, rotate, opacity: grown }}>
+        <g className="leaf-sway" style={{ animationDelay: `${(index % 4) * -1.1}s` }}>
+          <path
+            d={lens(leafW, leafH)}
+            fill={active ? "#3d6bff" : "#1d2130"}
+            stroke={active ? "#5a82ff" : "rgba(61,107,255,0.45)"}
+            strokeWidth="1.5"
+            style={{ transition: "fill 300ms, stroke 300ms" }}
+          />
+          <path
+            d={`M 14 ${leafH / 2} Q ${leafW / 2} ${leafH / 2 + 5}, ${leafW - 10} ${leafH / 2}`}
+            stroke={active ? "rgba(255,255,255,0.25)" : "rgba(61,107,255,0.18)"}
+            strokeWidth="1"
+            fill="none"
+          />
+          <Icon
+            x={leafW * 0.14}
+            y={leafH / 2 - iconSize / 2}
+            width={iconSize}
+            height={iconSize}
+            color={active ? "#ffffff" : "#5a82ff"}
+            strokeWidth={2}
+          />
+          <text
+            x={textX}
+            y={leafH / 2 + fontSize / 3 - ((lines.length - 1) * lineH) / 2}
+            className="font-sans"
+            fontSize={fontSize}
+            fontWeight="600"
+            fill="#ffffff"
+          >
+            {lines.map((line, k) => (
+              <tspan key={line} x={textX} dy={k ? lineH : 0}>
+                {line}
+              </tspan>
+            ))}
+          </text>
+        </g>
+      </motion.g>
+    </g>
+  );
+}
 
 function TreeCanvas({
   layout,
   skills,
   active,
   onActive,
+  growth,
+  className,
 }: {
   layout: TreeLayout;
   skills: Skill[];
   active: number;
   onActive: (i: number) => void;
+  growth: Growth;
+  className?: string;
 }) {
-  const { width, height, leafW, leafH, fontSize } = layout;
+  const { width, height } = layout;
   const spots = layout.spots.slice(0, skills.length);
 
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} className="h-auto w-full overflow-visible" role="list" aria-label="Skill tree">
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      className={`h-auto w-full overflow-visible ${className ?? ""}`}
+      role="list"
+      aria-label="Skill tree"
+    >
       {/* ground */}
       <ellipse cx={layout.ground.cx} cy={layout.ground.cy} rx={layout.ground.rx} ry="16" fill="rgba(61,107,255,0.08)" />
-      <motion.path
+      <GrowPath
+        growth={growth}
+        from={WINDOWS.ground[0]}
+        to={WINDOWS.ground[1]}
         d={`M ${layout.ground.cx - layout.ground.rx * 0.9} ${layout.ground.cy} L ${layout.ground.cx + layout.ground.rx * 0.9} ${layout.ground.cy}`}
         stroke="rgba(255,255,255,0.1)"
-        strokeWidth="2"
-        strokeLinecap="round"
-        {...grow}
-        transition={{ duration: 0.6, ease }}
+        strokeWidth={2}
       />
 
       {/* roots */}
       {layout.roots.map((d, i) => (
-        <motion.path
+        <GrowPath
           key={d}
+          growth={growth}
+          from={WINDOWS.roots[0]}
+          to={WINDOWS.roots[1]}
           d={d}
           stroke="#2c2f37"
           strokeWidth={6 - i}
-          strokeLinecap="round"
-          fill="none"
-          {...grow}
-          transition={{ duration: 0.5, delay: 0.1, ease }}
         />
       ))}
 
       {/* trunk + leader */}
-      <motion.path
+      <GrowPath
+        growth={growth}
+        from={WINDOWS.trunk[0]}
+        to={WINDOWS.trunk[1]}
         d={layout.trunk}
         stroke="#2c2f37"
         strokeWidth={layout.trunkWidth}
-        strokeLinecap="round"
-        fill="none"
-        {...grow}
-        transition={{ duration: 0.7, delay: 0.15, ease }}
       />
-      <motion.path
+      <GrowPath
+        growth={growth}
+        from={WINDOWS.trunk[0]}
+        to={WINDOWS.trunk[1]}
         d={layout.trunk}
         stroke="rgba(255,255,255,0.05)"
         strokeWidth={layout.trunkWidth / 5}
-        strokeLinecap="round"
-        fill="none"
         transform={`translate(${-layout.trunkWidth / 4} 0)`}
-        {...grow}
-        transition={{ duration: 0.7, delay: 0.15, ease }}
       />
-      <motion.path
+      <GrowPath
+        growth={growth}
+        from={WINDOWS.leader[0]}
+        to={WINDOWS.leader[1]}
         d={layout.leaderPath}
         stroke="#2c2f37"
         strokeWidth={layout.leaderWidth}
-        strokeLinecap="round"
-        fill="none"
-        {...grow}
-        transition={{ duration: 0.7, delay: 0.55, ease }}
       />
 
       {/* branches */}
       {spots.map(({ at, from }, i) =>
         i === layout.leader ? null : (
-          <motion.path
+          <Branch
             key={`branch-${i}`}
-            d={branchPath(from, at)}
+            growth={growth}
+            index={i}
+            from={from}
+            to={at}
             stroke={active === i ? "#3d6bff" : "#2c2f37"}
-            strokeWidth={layout.leaderWidth * (from[1] > layout.height * 0.66 ? 0.7 : 0.58)}
-            strokeLinecap="round"
-            fill="none"
-            style={{ transition: "stroke 300ms" }}
-            {...grow}
-            transition={{ duration: 0.7, delay: BRANCH_START + i * 0.06, ease }}
+            strokeWidth={layout.leaderWidth * (from[1] > height * 0.66 ? 0.7 : 0.58)}
           />
         ),
       )}
 
       {/* little leaves sprouting along the wood */}
-      {layout.sprouts(spots).map((s, k) => (
-        <g key={k} transform={`translate(${s.x} ${s.y}) rotate(${s.angle})`}>
-          <motion.path
-            d={lens(26, 12)}
-            transform="translate(0 -6)"
-            fill={k % 2 ? "rgba(61,107,255,0.6)" : "rgba(61,107,255,0.35)"}
-            style={{ originX: 0, originY: 0.5 }}
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ type: "spring", stiffness: 220, damping: 14, delay: LEAF_START + k * 0.05 }}
-          />
-        </g>
+      {layout.sprouts(spots).map((sprout, k) => (
+        <Sprout key={k} growth={growth} index={k} sprout={sprout} />
       ))}
 
       {/* skill leaves */}
-      {spots.map(({ at }, i) => {
+      {spots.map((spot, i) => {
         const skill = skills[i];
-        const isActive = active === i;
-        const Icon = skill.icon;
-        const iconSize = fontSize + 3.5;
-        const textX = leafW * 0.14 + iconSize + 7;
-        const lines = titleLines(skill.title, leafW - textX - 6, fontSize);
-        const lineH = fontSize * 1.15;
+        if (!skill) return null;
         return (
-          <g
+          <SkillLeaf
             key={skill.title}
-            transform={`translate(${at[0] - leafW / 2} ${at[1] - leafH / 2})`}
-            role="listitem"
-            tabIndex={0}
-            aria-label={`${skill.title}: ${skill.description}`}
-            onMouseEnter={() => onActive(i)}
-            onFocus={() => onActive(i)}
-            onClick={() => onActive(i)}
-            className="cursor-pointer outline-none"
-          >
-            <motion.g
-              style={{ originX: 0.5, originY: 0.5 }}
-              initial={{ scale: 0, rotate: -18, opacity: 0 }}
-              whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ type: "spring", stiffness: 160, damping: 13, delay: LEAF_START + 0.15 + i * 0.1 }}
-            >
-              <g className="leaf-sway" style={{ animationDelay: `${(i % 4) * -1.1}s` }}>
-                <path
-                  d={lens(leafW, leafH)}
-                  fill={isActive ? "#3d6bff" : "#1d2130"}
-                  stroke={isActive ? "#5a82ff" : "rgba(61,107,255,0.45)"}
-                  strokeWidth="1.5"
-                  style={{ transition: "fill 300ms, stroke 300ms" }}
-                />
-                <path
-                  d={`M 14 ${leafH / 2} Q ${leafW / 2} ${leafH / 2 + 5}, ${leafW - 10} ${leafH / 2}`}
-                  stroke={isActive ? "rgba(255,255,255,0.25)" : "rgba(61,107,255,0.18)"}
-                  strokeWidth="1"
-                  fill="none"
-                />
-                <Icon
-                  x={leafW * 0.14}
-                  y={leafH / 2 - iconSize / 2}
-                  width={iconSize}
-                  height={iconSize}
-                  color={isActive ? "#ffffff" : "#5a82ff"}
-                  strokeWidth={2}
-                />
-                <text
-                  x={textX}
-                  y={leafH / 2 + fontSize / 3 - ((lines.length - 1) * lineH) / 2}
-                  className="font-sans"
-                  fontSize={fontSize}
-                  fontWeight="600"
-                  fill="#ffffff"
-                >
-                  {lines.map((line, k) => (
-                    <tspan key={line} x={textX} dy={k ? lineH : 0}>
-                      {line}
-                    </tspan>
-                  ))}
-                </text>
-              </g>
-            </motion.g>
-          </g>
+            growth={growth}
+            index={i}
+            spot={spot}
+            skill={skill}
+            active={active === i}
+            onActive={() => onActive(i)}
+            layout={layout}
+          />
         );
       })}
     </svg>
@@ -340,6 +492,40 @@ function ActiveSkill({ skill, hint, aside }: { skill: Skill; hint: string; aside
 
 export function SkillTree({ skills }: { skills: Skill[] }) {
   const [active, setActive] = useState(0);
+  const runway = useRef<HTMLDivElement>(null);
+  const panel = usePanelScroller();
+  const pinned = panel !== null;
+  const reducedMotion = useReducedMotion();
+  const growth = useMotionValue(0);
+
+  const { scrollYProgress } = useScroll({
+    container: panel ?? undefined,
+    target: runway,
+    offset: ["start start", "end end"],
+  });
+
+  // Desktop: growth follows the panel's own scroll position.
+  useEffect(() => {
+    if (!pinned || reducedMotion) return;
+    const apply = (value: number) => {
+      growth.set(smoothstep(clamp01((value - GROW_START) / (GROW_END - GROW_START))));
+    };
+    apply(scrollYProgress.get());
+    return scrollYProgress.on("change", apply);
+  }, [pinned, reducedMotion, scrollYProgress, growth]);
+
+  // Phones: one-shot growth when the tree scrolls into view.
+  const inView = useInView(runway, { once: true, amount: 0.3 });
+  useEffect(() => {
+    if (pinned || reducedMotion || !inView) return;
+    const controls = animate(growth, 1, { duration: 2.2, ease });
+    return () => controls.stop();
+  }, [pinned, reducedMotion, inView, growth]);
+
+  useEffect(() => {
+    if (reducedMotion) growth.set(1);
+  }, [reducedMotion, growth]);
+
   const current = skills[active];
   const counter = (
     <span className="eyebrow">
@@ -348,22 +534,40 @@ export function SkillTree({ skills }: { skills: Skill[] }) {
   );
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-line bg-surface p-5 md:p-10">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_50%_40%,black_20%,transparent_75%)]" />
-      <div className="pointer-events-none absolute left-1/2 top-[30%] h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/15 blur-[110px]" />
+    <div ref={runway} className="relative md:h-[230vh]">
+      <div className="md:sticky md:top-0 md:flex md:h-[100svh] md:items-center">
+        <div className="relative w-full overflow-hidden rounded-3xl border border-line bg-surface p-5 md:p-8 lg:p-10">
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_50%_40%,black_20%,transparent_75%)]" />
+          <div className="pointer-events-none absolute left-1/2 top-[30%] h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(61,107,255,0.22),transparent)]" />
 
-      <div className="relative hidden lg:block">
-        <TreeCanvas layout={wideTree} skills={skills} active={active} onActive={setActive} />
-        <div className="pointer-events-none absolute bottom-0 left-0 max-w-[300px]">
-          <ActiveSkill skill={current} hint="Hover a leaf" />
-        </div>
-        <div className="absolute bottom-0 right-0">{counter}</div>
-      </div>
+          <div className="relative hidden lg:block">
+            <TreeCanvas
+              layout={wideTree}
+              skills={skills}
+              active={active}
+              onActive={setActive}
+              growth={growth}
+              className="max-h-[74svh]"
+            />
+            <div className="pointer-events-none absolute bottom-0 left-0 max-w-[300px]">
+              <ActiveSkill skill={current} hint="Hover a leaf" />
+            </div>
+            <div className="absolute bottom-0 right-0">{counter}</div>
+          </div>
 
-      <div className="relative mx-auto max-w-sm lg:hidden">
-        <TreeCanvas layout={tallTree} skills={skills} active={active} onActive={setActive} />
-        <div className="mt-6 border-t border-line pt-5">
-          <ActiveSkill skill={current} hint="Tap a leaf" aside={counter} />
+          <div className="relative mx-auto max-w-sm lg:hidden">
+            <TreeCanvas
+              layout={tallTree}
+              skills={skills}
+              active={active}
+              onActive={setActive}
+              growth={growth}
+              className="md:max-h-[50svh]"
+            />
+            <div className="mt-6 border-t border-line pt-5">
+              <ActiveSkill skill={current} hint="Tap a leaf" aside={counter} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -17,8 +17,8 @@ function Frame({ children, label }: { children: React.ReactNode; label: string }
     <div className="theme-dark relative h-full w-full overflow-hidden bg-[#15161a]">
       {/* grid + glow */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]" />
-      <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/30 blur-[90px] transition-transform duration-700 group-hover:scale-125" />
-      <div className="absolute -bottom-32 -left-16 h-64 w-64 rounded-full bg-accent/10 blur-[80px]" />
+      <div className="absolute -right-24 -top-24 h-72 w-72 bg-[radial-gradient(closest-side,rgba(61,107,255,0.3),transparent)] transition-transform duration-700 group-hover:scale-125" />
+      <div className="absolute -bottom-32 -left-16 h-64 w-64 bg-[radial-gradient(closest-side,rgba(61,107,255,0.12),transparent)]" />
       <div className="absolute inset-0 flex items-center justify-center p-[7%] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
         {children}
       </div>
@@ -73,7 +73,7 @@ function LyricsCover() {
           </div>
         </Window>
         {/* Floating karaoke strip */}
-        <div className="absolute -bottom-8 left-1/2 w-[110%] -translate-x-1/2 rounded-2xl border border-accent/40 bg-[#0d0e11]/90 px-5 py-3 text-center shadow-[0_0_40px_rgba(61,107,255,0.35)] backdrop-blur">
+        <div className="absolute -bottom-8 left-1/2 w-[110%] -translate-x-1/2 rounded-2xl border border-accent/40 bg-[#0d0e11]/95 px-5 py-3 text-center shadow-[0_0_40px_rgba(61,107,255,0.35)]">
           <p className="text-[10px] text-white/35">and I never felt so alive</p>
           <p className="mt-1 font-display text-base font-bold tracking-tight md:text-lg">
             <span className="text-accent">Singing every word</span>

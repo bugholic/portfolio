@@ -38,7 +38,7 @@ function MagneticCta() {
 export function Footer() {
   return (
     <footer id="contact" className="relative overflow-hidden bg-surface pt-24 md:pt-36">
-      <div className="pointer-events-none absolute -bottom-60 left-1/2 h-[480px] w-[900px] -translate-x-1/2 rounded-full bg-accent/20 blur-[140px]" />
+      <div className="pointer-events-none absolute -bottom-60 left-1/2 h-[480px] w-[900px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(61,107,255,0.18),transparent)]" />
 
       <div className="container-x relative">
         <span className="eyebrow">

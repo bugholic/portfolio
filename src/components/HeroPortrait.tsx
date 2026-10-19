@@ -41,7 +41,7 @@ export function HeroPortrait() {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:28px_28px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
           <motion.div
             style={{ left: glowX, top: glowY }}
-            className="absolute h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/25 blur-3xl"
+            className="absolute h-72 w-72 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(255,255,255,0.28),transparent)]"
           />
           <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full border-[22px] border-white/10" />
         </div>
@@ -77,7 +77,7 @@ export function HeroPortrait() {
             initial={{ opacity: 0, scale: 0.6 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 1.3, ease }}
-            className="rounded-2xl border border-white/10 bg-bg/80 px-3.5 py-2.5 backdrop-blur-md"
+            className="rounded-2xl border border-white/10 bg-bg/90 px-3.5 py-2.5"
           >
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted">Experience</p>
             <p className="font-display text-lg font-bold leading-tight">
@@ -99,7 +99,7 @@ export function HeroPortrait() {
         </div>
 
         <div
-          className="absolute inset-x-3 bottom-3 flex items-center justify-between rounded-2xl border border-white/10 bg-bg/75 px-4 py-3 backdrop-blur-md"
+          className="absolute inset-x-3 bottom-3 flex items-center justify-between rounded-2xl border border-white/10 bg-bg/85 px-4 py-3"
           style={{ transform: "translateZ(90px)" }}
         >
           <div>

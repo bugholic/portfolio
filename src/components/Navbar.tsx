@@ -114,7 +114,7 @@ function MenuOverlay({ onClose }: { onClose: () => void }) {
       role="dialog"
       aria-modal="true"
     >
-      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-accent/25 blur-[140px]" />
+      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[520px] w-[520px] bg-[radial-gradient(closest-side,rgba(61,107,255,0.22),transparent)]" />
 
       <div className="container-x relative flex items-center justify-between pt-5">
         <span className="eyebrow">Navigation</span>

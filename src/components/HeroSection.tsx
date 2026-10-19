@@ -21,7 +21,7 @@ export function HeroSection() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     <section ref={ref as any} className="relative overflow-hidden pt-28 md:pt-32">
       {/* Soft blue glow on the grey canvas */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-accent/15 blur-[140px]" />
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(61,107,255,0.16),transparent)]" />
 
       <div className="container-x relative">
         {/* Meta row */}

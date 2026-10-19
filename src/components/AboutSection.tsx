@@ -120,7 +120,7 @@ export function AboutSection() {
               playsInline
               className="h-full max-h-72 w-full object-cover md:max-h-none"
             />
-            <span className="absolute left-4 top-4 rounded-full bg-bg/70 px-3 py-1 font-mono text-[11px] text-white/80 backdrop-blur-md">
+            <span className="absolute left-4 top-4 rounded-full bg-bg/85 px-3 py-1 font-mono text-[11px] text-white/80">
               aka Bugholic
             </span>
           </motion.div>
