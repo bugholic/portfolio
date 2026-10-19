@@ -72,19 +72,6 @@ export function HorizontalScroll({ children }: { children: React.ReactNode }) {
       });
       total = cursor;
       runwayEl.style.height = `${total + window.innerHeight}px`;
-      const debugText = layout
-        .map((e, i) => `${i}: v=${e.vertical} sh=${panels[i].scrollHeight} ch=${panels[i].clientHeight}`)
-        .join("  ||  ");
-      document.title = debugText;
-      let debugEl = document.getElementById("hs-debug");
-      if (!debugEl) {
-        debugEl = document.createElement("pre");
-        debugEl.id = "hs-debug";
-        debugEl.style.cssText =
-          "position:fixed;left:0;bottom:0;z-index:9999;background:#000;color:#0f0;font:11px monospace;padding:6px;margin:0;white-space:pre-wrap;max-width:100vw;";
-        document.body.appendChild(debugEl);
-      }
-      debugEl.textContent = `vw=${window.innerWidth} vh=${window.innerHeight}\n${debugText}`;
     };
 
     const update = () => {
