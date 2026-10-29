@@ -37,7 +37,7 @@ export function HeroPortrait() {
         className="theme-dark group relative aspect-[4/5] w-full"
       >
         {/* Layer 0: frame */}
-        <div className="absolute inset-0 overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,#4a76ff_0%,#2a4fd6_45%,#16204a_100%)] shadow-[0_40px_80px_-30px_rgba(61,107,255,0.6)]">
+        <div className="absolute inset-0 overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,#5c80f0_0%,#2f55d4_45%,#08113a_100%)] shadow-[0_40px_80px_-30px_rgba(65,105,225,0.6)]">
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:28px_28px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
           <motion.div
             style={{ left: glowX, top: glowY }}
@@ -81,7 +81,7 @@ export function HeroPortrait() {
           >
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted">Experience</p>
             <p className="font-display text-lg font-bold leading-tight">
-              3<span className="text-accent">+</span> yrs
+              3<span className="text-signal">+</span> yrs
             </p>
           </motion.div>
         </div>
@@ -93,7 +93,7 @@ export function HeroPortrait() {
             transition={{ duration: 0.5, delay: 1.45, ease }}
             className="flex items-center gap-2 rounded-full border border-white/10 bg-white px-3 py-2 text-bg shadow-xl"
           >
-            <span className="h-2 w-2 rounded-full bg-accent" />
+            <span className="h-2 w-2 rounded-full bg-signal" />
             <span className="text-xs font-semibold">Open for freelance</span>
           </motion.div>
         </div>

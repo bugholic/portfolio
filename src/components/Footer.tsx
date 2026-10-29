@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { ArrowUp, ArrowUpRight, Download } from "lucide-react";
 import { useMagneticEffect } from "../hooks/useMagneticEffect";
 import { profile } from "../data/profile";
+import { JumbleHeading } from "./JumbleHeading";
 
 const socials = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/ayuv" },
@@ -27,7 +28,7 @@ function MagneticCta() {
       style={{ x, y }}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="flex h-36 w-36 shrink-0 flex-col items-center justify-center gap-1 rounded-full bg-accent text-sm font-medium text-white transition-colors hover:bg-accent-hover md:h-44 md:w-44"
+      className="flex h-36 w-36 shrink-0 flex-col items-center justify-center gap-1 rounded-full bg-accent text-sm font-medium text-white transition-colors hover:bg-signal md:h-44 md:w-44"
     >
       <ArrowUpRight size={28} />
       Let's talk
@@ -38,7 +39,7 @@ function MagneticCta() {
 export function Footer() {
   return (
     <footer id="contact" className="relative overflow-hidden bg-surface pt-24 md:pt-36">
-      <div className="pointer-events-none absolute -bottom-60 left-1/2 h-[480px] w-[900px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(61,107,255,0.18),transparent)]" />
+      <div className="pointer-events-none absolute -bottom-60 left-1/2 h-[480px] w-[900px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(65,105,225,0.18),transparent)]" />
 
       <div className="container-x relative">
         <span className="eyebrow">
@@ -46,17 +47,10 @@ export function Footer() {
         </span>
 
         <div className="mt-8 flex flex-col gap-10 border-b border-line pb-16 md:flex-row md:items-end md:justify-between">
-          <motion.h2
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          <JumbleHeading
+            lines={[[{ text: "Got a project" }], [{ text: "in mind?", className: "text-accent" }]]}
             className="font-display text-[clamp(3rem,9vw,8.5rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.05em]"
-          >
-            Got a project
-            <br />
-            <span className="text-accent">in mind?</span>
-          </motion.h2>
+          />
           <MagneticCta />
         </div>
 

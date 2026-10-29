@@ -3,17 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#111215" />
+    <meta name="theme-color" content="#ffffff" />
     <script>
-      // Apply the saved or system theme before first paint to avoid a flash.
+      // Apply the saved theme before first paint to avoid a flash.
       (function () {
         var theme;
         try { theme = localStorage.getItem("theme"); } catch (e) {}
-        if (theme !== "light" && theme !== "dark") {
-          theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-        }
+        // White is the default; dark only when the visitor picked it.
+        if (theme !== "dark") theme = "light";
         document.documentElement.dataset.theme = theme;
-        if (theme === "light") document.querySelector("meta[name=theme-color]").setAttribute("content", "#f2f3f6");
+        if (theme === "dark") document.querySelector("meta[name=theme-color]").setAttribute("content", "#08113a");
       })();
     </script>
     <meta name="description" content="Aayush Vishwakarma (Bugholic): full-stack developer building web, mobile and AI-powered products with React, Next.js, Node.js and Python." />

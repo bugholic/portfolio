@@ -13,14 +13,9 @@ export function ExperienceSection() {
     <section id="experience" className="scroll-mt-24 py-24 md:py-36">
       <div className="container-x">
         <SectionHeader
-          index="02"
           label="Experience"
           aside="3+ years"
-          title={
-            <>
-              Where I've <span className="text-accent">shipped</span>
-            </>
-          }
+          title={[[{ text: "Where I've " }, { text: "shipped", className: "text-accent" }]]}
         />
       </div>
 
@@ -68,7 +63,7 @@ function ExperienceList() {
               <ul className="space-y-3">
                 {exp.highlights.map((item) => (
                   <li key={item} className="flex gap-3 text-[15px] leading-7 text-white/70">
-                    <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                    <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-signal" />
                     {item}
                   </li>
                 ))}

@@ -12,12 +12,12 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, delay: (index % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className={`group min-w-0 ${index % 2 === 1 ? "md:mt-28" : ""}`}
+      transition={{ duration: 0.7, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      className="group flex min-w-0 flex-col"
     >
       <CoverWrapper
         {...(href ? { href, target: "_blank", rel: "noreferrer" } : {})}
-        className="relative block aspect-[16/11] overflow-hidden rounded-3xl border border-line"
+        className="relative block aspect-[16/10] overflow-hidden rounded-2xl border border-line"
       >
         <ProjectCover cover={project.cover} />
         <span className="absolute left-4 top-4 rounded-full bg-bg/85 px-3 py-1 font-mono text-[11px] text-white/80">
@@ -30,8 +30,8 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         )}
       </CoverWrapper>
 
-      <div className="mt-6 flex items-start justify-between gap-6">
-        <h3 className="font-display text-2xl font-bold uppercase leading-tight tracking-tight md:text-3xl">
+      <div className="mt-5 flex items-start justify-between gap-4">
+        <h3 className="font-display text-xl font-bold uppercase leading-tight tracking-tight md:text-2xl">
           {project.title}
         </h3>
         <span
@@ -42,17 +42,23 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
           {project.kind}
         </span>
       </div>
-      <p className="mt-3 text-[15px] leading-7 text-muted">{project.summary}</p>
+      <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted" title={project.summary}>
+        {project.summary}
+      </p>
 
-      <div className="mt-5 flex flex-wrap items-center gap-2 text-xs">
-        {project.stack.map((tech) => (
+      {/* Three tags keep every card the same height; the rest collapse into a count */}
+      <div className="mb-5 mt-4 flex flex-wrap items-center gap-2 text-xs">
+        {project.stack.slice(0, 3).map((tech) => (
           <span key={tech} className="rounded-full border border-line px-3 py-1 text-white/70">
             {tech}
           </span>
         ))}
+        {project.stack.length > 3 && (
+          <span className="px-1 font-mono text-[11px] text-muted">+{project.stack.length - 3}</span>
+        )}
       </div>
 
-      <div className="mt-6 flex items-center gap-5 border-t border-line pt-5 text-sm">
+      <div className="mt-auto flex items-center gap-5 border-t border-line pt-4 text-sm">
         {project.repo && (
           <a
             href={project.repo}

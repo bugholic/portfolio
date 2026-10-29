@@ -26,7 +26,7 @@ export function ExperienceLog() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.6, ease }}
-        className="theme-dark overflow-hidden rounded-2xl border border-line bg-[#0b0c0f] shadow-[0_40px_100px_-50px_rgba(0,0,0,0.95)]"
+        className="theme-dark overflow-hidden rounded-2xl border border-line bg-[#060d2e] shadow-[0_40px_100px_-50px_rgba(0,0,0,0.95)]"
       >
         <div className="flex items-center gap-3 border-b border-white/8 bg-white/[0.03] px-4 py-3 md:px-5">
           <span className="flex gap-1.5" aria-hidden="true">
@@ -95,7 +95,7 @@ function Commit({
           <span className={`w-px self-stretch ${index === total - 1 && !open ? "bg-white/8" : "bg-white/8"}`} />
           <span
             className={`absolute top-1 h-2.5 w-2.5 rounded-full border-2 transition-colors ${
-              open ? "border-accent bg-accent" : "border-white/30 bg-[#0b0c0f]"
+              open ? "border-accent bg-accent" : "border-white/30 bg-[#060d2e]"
             }`}
           />
         </span>
@@ -153,7 +153,7 @@ function Commit({
               <ul className="mt-5 space-y-2.5 border-t border-white/8 pt-5">
                 {exp.highlights.map((item) => (
                   <li key={item} className="flex gap-3 text-[14px] leading-7 text-white/75 md:text-[15px]">
-                    <span className="font-mono text-[13px] leading-7 text-accent">+</span>
+                    <span className="font-mono text-[13px] leading-7 text-signal">+</span>
                     <span>{item}</span>
                   </li>
                 ))}

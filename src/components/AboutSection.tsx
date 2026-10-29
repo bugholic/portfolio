@@ -33,7 +33,7 @@ const principles = [
     title: "AI in the loop",
     text: "RAG pipelines, LLM agents and MCP integrations that do real work.",
     visual: AiVisual,
-    tone: "border-accent/25 bg-[linear-gradient(160deg,rgba(61,107,255,0.14),var(--color-surface)_55%)]",
+    tone: "border-accent/25 bg-[linear-gradient(160deg,rgba(65,105,225,0.14),var(--color-surface)_55%)]",
   },
 ];
 
@@ -44,16 +44,9 @@ export function AboutSection() {
     <section id="about" className="scroll-mt-24 py-24 md:py-36">
       <div className="container-x">
         <SectionHeader
-          index="01"
           label="About"
           aside={profile.tagline}
-          title={
-            <>
-              Code to evolve,
-              <br />
-              <span className="text-muted">innovate to assist.</span>
-            </>
-          }
+          title={[[{ text: "Code to evolve," }], [{ text: "innovate to assist.", className: "text-muted" }]]}
         />
 
         <div className="grid gap-4 md:grid-cols-6">

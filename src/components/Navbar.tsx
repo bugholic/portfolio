@@ -4,14 +4,20 @@ import { ArrowUpRight, Download, Moon, Sun } from "lucide-react";
 import { useMagneticEffect } from "../hooks/useMagneticEffect";
 import { useTheme } from "../hooks/useTheme";
 import { profile } from "../data/profile";
+import { sectionOrder, type SectionKey } from "../data/sectionOrder";
 
 const ease = [0.76, 0, 0.24, 1] as const;
 
+const sectionLabels: Record<SectionKey, string> = {
+  about: "About",
+  experience: "Experience",
+  projects: "Work",
+  stack: "Stack",
+};
+
 const links = [
-  { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Work" },
-  { href: "#stack", label: "Stack" },
+  // Same order as the page, which is shuffled per load; contact always closes the list
+  ...sectionOrder.map((key) => ({ href: `#${key}`, label: sectionLabels[key] })),
   { href: "#contact", label: "Contact" },
 ];
 
@@ -114,7 +120,7 @@ function MenuOverlay({ onClose }: { onClose: () => void }) {
       role="dialog"
       aria-modal="true"
     >
-      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[520px] w-[520px] bg-[radial-gradient(closest-side,rgba(61,107,255,0.22),transparent)]" />
+      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[520px] w-[520px] bg-[radial-gradient(closest-side,rgba(65,105,225,0.22),transparent)]" />
 
       <div className="container-x relative flex items-center justify-between pt-5">
         <span className="eyebrow">Navigation</span>
@@ -177,7 +183,7 @@ function MenuOverlay({ onClose }: { onClose: () => void }) {
           <a
             href={profile.cvUrl}
             download
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-hover"
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-signal"
           >
             Download CV <Download size={15} />
           </a>
@@ -223,7 +229,7 @@ export function Navbar() {
           </a>
 
           <p className="eyebrow hidden md:block">
-            Code to evolve <span className="text-accent">/</span> innovate to assist
+            Code to evolve <span className="text-signal">/</span> innovate to assist
           </p>
 
           <div className="flex items-center gap-2.5">

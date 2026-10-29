@@ -26,16 +26,9 @@ export function TechStackSection() {
     <section id="stack" className="scroll-mt-24 py-24 md:py-36">
       <div className="container-x">
         <SectionHeader
-          index="04"
           label="Stack"
           aside={`${stackItems.length} core tools`}
-          title={
-            <>
-              Lean stack,
-              <br />
-              <span className="text-muted">fast delivery.</span>
-            </>
-          }
+          title={[[{ text: "Lean stack," }], [{ text: "fast delivery.", className: "text-muted" }]]}
         />
 
         <SkillTree skills={stackItems} />

@@ -6,17 +6,22 @@
   --font-display: "Google Sans Flex", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* Dark grey foundation */
-  --color-bg: #111215;
-  --color-surface: #18191d;
-  --color-surface-2: #202227;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-muted: #8b8f98;
+  /* Deep royal navy foundation */
+  --color-bg: #08113a;
+  --color-surface: #0e1a4d;
+  --color-surface-2: #15235e;
+  --color-line: rgba(255, 255, 255, 0.1);
+  --color-muted: #9aa6cf;
+  --color-white: #ffffff;
 
-  /* Blue accent */
-  --color-accent: #3d6bff;
-  --color-accent-hover: #5a82ff;
-  --color-accent-soft: rgba(61, 107, 255, 0.12);
+  /* Royal blue accent */
+  --color-accent: #4169e1;
+  --color-accent-hover: #5c80f0;
+  --color-accent-soft: rgba(65, 105, 225, 0.16);
+
+  /* Red signal: live dots, small marks and hover states */
+  --color-signal: #e3262f;
+  --color-signal-soft: rgba(227, 38, 47, 0.14);
 
   --animate-marquee: marquee 32s linear infinite;
 
@@ -32,31 +37,36 @@
 
 /* Light theme: the same tokens, re-pointed. `white` is the ink colour across the site. */
 :root[data-theme="light"] {
-  --color-bg: #f2f3f6;
+  --color-bg: #ffffff;
   --color-surface: #ffffff;
-  --color-surface-2: #e8eaf0;
-  --color-line: rgba(17, 20, 32, 0.1);
-  --color-muted: #5b606b;
-  --color-white: #14161b;
-  --color-accent: #3460f5;
-  --color-accent-soft: rgba(52, 96, 245, 0.1);
+  --color-surface-2: #eef2fd;
+  --color-line: rgba(10, 25, 90, 0.12);
+  --color-muted: #545e7e;
+  --color-white: #0a1647;
+  --color-accent: #2f55d4;
+  --color-accent-hover: #4169e1;
+  --color-accent-soft: rgba(65, 105, 225, 0.1);
+  --color-signal: #d61f2a;
   color-scheme: light;
 }
 
-/* Text sitting on the blue accent stays white in both themes */
-:root[data-theme="light"] .bg-accent {
+/* Text sitting on the blue accent or red signal stays white in both themes */
+:root[data-theme="light"] .bg-accent,
+:root[data-theme="light"] .bg-signal {
   --color-white: #ffffff;
   color: #ffffff;
 }
 
 /* Illustrations of dark product UI stay dark, like screenshots of a device */
 :root[data-theme="light"] .theme-dark {
-  --color-bg: #111215;
-  --color-surface: #18191d;
-  --color-surface-2: #202227;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-muted: #8b8f98;
+  --color-bg: #08113a;
+  --color-surface: #0e1a4d;
+  --color-surface-2: #15235e;
+  --color-line: rgba(255, 255, 255, 0.1);
+  --color-muted: #9aa6cf;
   --color-white: #ffffff;
+  --color-accent: #4169e1;
+  --color-accent-hover: #5c80f0;
   color: #ffffff;
 }
 

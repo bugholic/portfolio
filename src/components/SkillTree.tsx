@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import {
   AnimatePresence,
   animate,
@@ -72,18 +72,18 @@ const lens = (w: number, h: number) =>
 const wideTree: TreeLayout = {
   width: 1200,
   height: 760,
-  leafW: 214,
+  leafW: 232,
   leafH: 58,
-  fontSize: 14.5,
+  fontSize: 14,
   spots: [
     { at: [150, 440], from: [594, 590] },
-    { at: [250, 300], from: [594, 530] },
+    { at: [236, 300], from: [594, 530] },
     { at: [340, 165], from: [598, 400] },
     { at: [470, 330], from: [596, 470] },
     { at: [600, 72], from: [600, 300] },
     { at: [730, 330], from: [604, 470] },
     { at: [860, 165], from: [602, 400] },
-    { at: [950, 300], from: [606, 530] },
+    { at: [964, 300], from: [606, 530] },
     { at: [1050, 440], from: [606, 590] },
   ],
   leader: 4,
@@ -111,7 +111,7 @@ const tallTree: TreeLayout = {
   height: 640,
   leafW: 150,
   leafH: 54,
-  fontSize: 13,
+  fontSize: 12.5,
   spots: [
     { at: [160, 42], from: [160, 300] },
     ...MOBILE_ROWS.map(({ y, left }) => ({
@@ -130,9 +130,12 @@ const tallTree: TreeLayout = {
   sprouts: () => MOBILE_ROWS.map(({ y, left }) => ({ x: 160, y: y - 4, angle: left ? -35 : -145 })),
 };
 
+// Rough glyph width for the label font; real widths are measured once the text renders.
+const estimateWidth = (text: string, fontSize: number) => text.length * fontSize * 0.56;
+
 // Break a title over two lines when it would not fit inside the leaf.
 function titleLines(title: string, room: number, fontSize: number) {
-  if (title.length * fontSize * 0.58 <= room) return [title];
+  if (estimateWidth(title, fontSize) <= room) return [title];
   const words = title.split(" ");
   let best = [title];
   let bestLen = Infinity;
@@ -261,7 +264,7 @@ function Sprout({
       <motion.path
         d={lens(26, 12)}
         transform="translate(0 -6)"
-        fill={index % 2 ? "rgba(61,107,255,0.6)" : "rgba(61,107,255,0.35)"}
+        fill={index % 2 ? "rgba(65,105,225,0.6)" : "rgba(65,105,225,0.35)"}
         style={{ originX: 0, originY: 0.5, scale: grown }}
       />
     </g>
@@ -291,10 +294,30 @@ function SkillLeaf({
   const rotate = useTransform(grown, [0, 1], [-18, 0]);
 
   const Icon = skill.icon;
-  const iconSize = fontSize + 3.5;
-  const textX = leafW * 0.14 + iconSize + 7;
-  const lines = titleLines(skill.title, leafW - textX - 6, fontSize);
-  const lineH = fontSize * 1.15;
+  const iconSize = fontSize + 3;
+  const gap = 7;
+  // The lens narrows toward its tips, so labels only use its fat middle
+  const room = leafW * 0.74;
+  const lines = titleLines(skill.title, room - iconSize - gap, fontSize);
+  const lineH = fontSize * 1.18;
+
+  // Centre icon + label as one group, using the label's real width once it has rendered
+  const textRef = useRef<SVGTextElement>(null);
+  const [textW, setTextW] = useState(() => Math.max(...lines.map((l) => estimateWidth(l, fontSize))));
+  useLayoutEffect(() => {
+    const measure = () => {
+      const spans = textRef.current ? Array.from(textRef.current.querySelectorAll("tspan")) : [];
+      const width = Math.max(0, ...spans.map((s) => s.getComputedTextLength()));
+      if (width) setTextW(width);
+    };
+    measure();
+    document.fonts?.ready.then(measure);
+  }, [skill.title, fontSize]);
+
+  const groupW = iconSize + gap + textW;
+  const iconX = (leafW - groupW) / 2;
+  const textX = iconX + iconSize + gap;
+  const mid = leafH / 2;
 
   return (
     <g
@@ -311,35 +334,40 @@ function SkillLeaf({
         <g className="leaf-sway" style={{ animationDelay: `${(index % 4) * -1.1}s` }}>
           <path
             d={lens(leafW, leafH)}
-            fill={active ? "#3d6bff" : "#1d2130"}
-            stroke={active ? "#5a82ff" : "rgba(61,107,255,0.45)"}
+            fill={active ? "#4169e1" : "#13205a"}
+            stroke={active ? "#5c80f0" : "rgba(65,105,225,0.45)"}
             strokeWidth="1.5"
             style={{ transition: "fill 300ms, stroke 300ms" }}
           />
+          {/* the midrib shows only at the tips, so it never runs through the label */}
           <path
-            d={`M 14 ${leafH / 2} Q ${leafW / 2} ${leafH / 2 + 5}, ${leafW - 10} ${leafH / 2}`}
-            stroke={active ? "rgba(255,255,255,0.25)" : "rgba(61,107,255,0.18)"}
+            d={`M 10 ${mid} L ${iconX - 8} ${mid} M ${textX + textW + 8} ${mid} L ${leafW - 10} ${mid}`}
+            stroke={active ? "rgba(255,255,255,0.3)" : "rgba(65,105,225,0.35)"}
             strokeWidth="1"
+            strokeLinecap="round"
             fill="none"
           />
           <Icon
-            x={leafW * 0.14}
-            y={leafH / 2 - iconSize / 2}
+            x={iconX}
+            y={mid - iconSize / 2}
             width={iconSize}
             height={iconSize}
-            color={active ? "#ffffff" : "#5a82ff"}
+            color={active ? "#ffffff" : "#5c80f0"}
             strokeWidth={2}
           />
           <text
-            x={textX}
-            y={leafH / 2 + fontSize / 3 - ((lines.length - 1) * lineH) / 2}
+            ref={textRef}
+            x={textX + textW / 2}
+            textAnchor="middle"
+            y={mid - ((lines.length - 1) * lineH) / 2}
+            dominantBaseline="central"
             className="font-sans"
             fontSize={fontSize}
             fontWeight="600"
             fill="#ffffff"
           >
             {lines.map((line, k) => (
-              <tspan key={line} x={textX} dy={k ? lineH : 0}>
+              <tspan key={line} x={textX + textW / 2} dy={k ? lineH : 0}>
                 {line}
               </tspan>
             ))}
@@ -376,7 +404,7 @@ function TreeCanvas({
       aria-label="Skill tree"
     >
       {/* ground */}
-      <ellipse cx={layout.ground.cx} cy={layout.ground.cy} rx={layout.ground.rx} ry="16" fill="rgba(61,107,255,0.08)" />
+      <ellipse cx={layout.ground.cx} cy={layout.ground.cy} rx={layout.ground.rx} ry="16" fill="rgba(65,105,225,0.08)" />
       <GrowPath
         growth={growth}
         from={WINDOWS.ground[0]}
@@ -394,7 +422,7 @@ function TreeCanvas({
           from={WINDOWS.roots[0]}
           to={WINDOWS.roots[1]}
           d={d}
-          stroke="#2c2f37"
+          stroke="#24336e"
           strokeWidth={6 - i}
         />
       ))}
@@ -405,7 +433,7 @@ function TreeCanvas({
         from={WINDOWS.trunk[0]}
         to={WINDOWS.trunk[1]}
         d={layout.trunk}
-        stroke="#2c2f37"
+        stroke="#24336e"
         strokeWidth={layout.trunkWidth}
       />
       <GrowPath
@@ -422,7 +450,7 @@ function TreeCanvas({
         from={WINDOWS.leader[0]}
         to={WINDOWS.leader[1]}
         d={layout.leaderPath}
-        stroke="#2c2f37"
+        stroke="#24336e"
         strokeWidth={layout.leaderWidth}
       />
 
@@ -435,7 +463,7 @@ function TreeCanvas({
             index={i}
             from={from}
             to={at}
-            stroke={active === i ? "#3d6bff" : "#2c2f37"}
+            stroke={active === i ? "#4169e1" : "#24336e"}
             strokeWidth={layout.leaderWidth * (from[1] > height * 0.66 ? 0.7 : 0.58)}
           />
         ),
@@ -538,7 +566,7 @@ export function SkillTree({ skills }: { skills: Skill[] }) {
       <div className="md:sticky md:top-0 md:flex md:h-[100svh] md:items-center">
         <div className="relative w-full overflow-hidden rounded-3xl border border-line bg-surface p-5 md:p-8 lg:p-10">
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_50%_40%,black_20%,transparent_75%)]" />
-          <div className="pointer-events-none absolute left-1/2 top-[30%] h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(61,107,255,0.22),transparent)]" />
+          <div className="pointer-events-none absolute left-1/2 top-[30%] h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(65,105,225,0.22),transparent)]" />
 
           <div className="relative hidden lg:block">
             <TreeCanvas

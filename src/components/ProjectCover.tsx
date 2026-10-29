@@ -14,11 +14,11 @@ export type CoverKey =
 
 function Frame({ children, label }: { children: React.ReactNode; label: string }) {
   return (
-    <div className="theme-dark relative h-full w-full overflow-hidden bg-[#15161a]">
+    <div className="theme-dark relative h-full w-full overflow-hidden bg-[#0a1340]">
       {/* grid + glow */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]" />
-      <div className="absolute -right-24 -top-24 h-72 w-72 bg-[radial-gradient(closest-side,rgba(61,107,255,0.3),transparent)] transition-transform duration-700 group-hover:scale-125" />
-      <div className="absolute -bottom-32 -left-16 h-64 w-64 bg-[radial-gradient(closest-side,rgba(61,107,255,0.12),transparent)]" />
+      <div className="absolute -right-24 -top-24 h-72 w-72 bg-[radial-gradient(closest-side,rgba(65,105,225,0.3),transparent)] transition-transform duration-700 group-hover:scale-125" />
+      <div className="absolute -bottom-32 -left-16 h-64 w-64 bg-[radial-gradient(closest-side,rgba(65,105,225,0.12),transparent)]" />
       <div className="absolute inset-0 flex items-center justify-center p-[7%] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
         {children}
       </div>
@@ -29,7 +29,7 @@ function Frame({ children, label }: { children: React.ReactNode; label: string }
 
 function Window({ children, className = "", title }: { children: React.ReactNode; className?: string; title?: string }) {
   return (
-    <div className={`rounded-xl border border-white/10 bg-[#1d1f25]/95 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)] ${className}`}>
+    <div className={`rounded-xl border border-white/10 bg-[#13205a]/95 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)] ${className}`}>
       <div className="flex items-center gap-1.5 border-b border-white/5 px-3 py-2">
         <span className="h-2 w-2 rounded-full bg-white/15" />
         <span className="h-2 w-2 rounded-full bg-white/15" />
@@ -73,7 +73,7 @@ function LyricsCover() {
           </div>
         </Window>
         {/* Floating karaoke strip */}
-        <div className="absolute -bottom-8 left-1/2 w-[110%] -translate-x-1/2 rounded-2xl border border-accent/40 bg-[#0d0e11]/95 px-5 py-3 text-center shadow-[0_0_40px_rgba(61,107,255,0.35)]">
+        <div className="absolute -bottom-8 left-1/2 w-[110%] -translate-x-1/2 rounded-2xl border border-accent/40 bg-[#070f33]/95 px-5 py-3 text-center shadow-[0_0_40px_rgba(65,105,225,0.35)]">
           <p className="text-[10px] text-white/35">and I never felt so alive</p>
           <p className="mt-1 font-display text-base font-bold tracking-tight md:text-lg">
             <span className="text-accent">Singing every word</span>
@@ -107,7 +107,7 @@ function FlowboardCover() {
                 {Array.from({ length: col.cards }, (_, i) => (
                   <div
                     key={i}
-                    className={`rounded-md border p-2 ${col.live && i === 0 ? "border-accent/60 bg-accent/10" : "border-white/5 bg-[#23252c]"}`}
+                    className={`rounded-md border p-2 ${col.live && i === 0 ? "border-accent/60 bg-accent/10" : "border-white/5 bg-[#1a2864]"}`}
                   >
                     <Line w={i % 2 ? "60%" : "85%"} />
                     <div className="mt-2 flex items-center justify-between">
@@ -152,7 +152,7 @@ function FoodoxCover() {
           </div>
           <div className="space-y-1.5">
             {orders.map((o) => (
-              <div key={o.id} className="flex items-center justify-between rounded-md bg-[#23252c] px-2.5 py-2">
+              <div key={o.id} className="flex items-center justify-between rounded-md bg-[#1a2864] px-2.5 py-2">
                 <span className="font-mono text-[9px] text-white/60">{o.id}</span>
                 <Line w="35%" />
                 <Pill tone={o.tone}>{o.status}</Pill>
@@ -183,7 +183,7 @@ function InventoryCover() {
           </div>
         </div>
         <div className="flex flex-col items-center gap-1">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent shadow-[0_0_24px_rgba(61,107,255,0.6)]">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent shadow-[0_0_24px_rgba(65,105,225,0.6)]">
             <Sparkles size={14} />
           </span>
           <span className="font-mono text-[7px] uppercase tracking-wider text-white/40">AI parse</span>
@@ -216,7 +216,7 @@ function LawCover() {
   return (
     <Frame label="Semantic search · Qdrant">
       <div className="w-full max-w-[460px] space-y-3">
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-[#1d1f25] px-4 py-2.5">
+        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-[#13205a] px-4 py-2.5">
           <Search size={13} className="text-accent" />
           <span className="text-[11px] text-white/60">precedents on breach of lease, Bhopal HC</span>
           <span className="ml-auto rounded-full bg-accent px-2 py-0.5 text-[8px] font-medium">Analyze</span>
@@ -239,7 +239,7 @@ function LawCover() {
               { label: "Ruling match", v: 92 },
               { label: "Opposition risk", v: 34 },
             ].map((m) => (
-              <div key={m.label} className="rounded-xl border border-white/10 bg-[#1d1f25] p-2.5">
+              <div key={m.label} className="rounded-xl border border-white/10 bg-[#13205a] p-2.5">
                 <p className="font-mono text-[7px] uppercase tracking-wider text-white/40">{m.label}</p>
                 <p className="mt-1 font-display text-lg font-bold">{m.v}%</p>
                 <div className="mt-1 h-1 rounded-full bg-white/10">
@@ -285,7 +285,7 @@ function ItsmCover() {
           </div>
           <div className="space-y-1.5">
             {tickets.map((tk, i) => (
-              <div key={tk.t} className="flex items-center gap-2 rounded-md bg-[#23252c] px-2 py-1.5">
+              <div key={tk.t} className="flex items-center gap-2 rounded-md bg-[#1a2864] px-2 py-1.5">
                 <Ticket size={10} className="shrink-0 text-white/40" />
                 <span className="truncate text-[9px] text-white/75">{tk.t}</span>
                 <span className="ml-auto font-mono text-[7px] text-white/30">#{318 - i}</span>
@@ -307,11 +307,11 @@ function SyncPlayCover() {
   const bars = [30, 55, 80, 45, 95, 60, 75, 40, 88, 50, 70, 35, 90, 58, 66, 42, 82, 48, 72, 38];
   return (
     <Frame label="Real-time · TypeScript">
-      <div className="w-full max-w-[440px] rounded-3xl border border-white/10 bg-[#1d1f25] p-5 shadow-2xl">
+      <div className="w-full max-w-[440px] rounded-3xl border border-white/10 bg-[#13205a] p-5 shadow-2xl">
         <div className="flex items-center justify-between">
           <div className="flex -space-x-2">
             {["bg-accent", "bg-white/70", "bg-accent/50", "bg-white/30"].map((c, i) => (
-              <span key={i} className={`h-6 w-6 rounded-full border-2 border-[#1d1f25] ${c}`} />
+              <span key={i} className={`h-6 w-6 rounded-full border-2 border-[#13205a] ${c}`} />
             ))}
           </div>
           <Pill tone="accent">4 listening together</Pill>

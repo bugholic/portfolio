@@ -15,7 +15,7 @@ const codeLines: { indent: number; tokens: [string, string][] }[] = [
 
 export function CraftVisual() {
   return (
-    <div className="theme-dark h-full rounded-2xl border border-white/10 bg-[#121317] font-mono text-[11px] leading-[1.9]">
+    <div className="theme-dark h-full rounded-2xl border border-white/10 bg-[#0b1540] font-mono text-[11px] leading-[1.9]">
       <div className="flex items-center gap-1.5 border-b border-white/5 px-3 py-2">
         <span className="h-2 w-2 rounded-full bg-white/15" />
         <span className="h-2 w-2 rounded-full bg-white/15" />
@@ -54,7 +54,7 @@ const milestones = ["Brief", "Plan", "Build", "Launch"];
 
 export function ProductVisual() {
   return (
-    <div className="theme-dark flex h-full flex-col justify-between rounded-2xl border border-white/10 bg-[#121317] p-4">
+    <div className="theme-dark flex h-full flex-col justify-between rounded-2xl border border-white/10 bg-[#0b1540] p-4">
       <div className="flex items-center justify-between font-mono text-[9px] uppercase tracking-[0.18em] text-white/40">
         <span>Roadmap · Q3</span>
         <span className="rounded-full bg-emerald-400/10 px-2 py-0.5 text-emerald-300/90">On track</span>
@@ -73,10 +73,10 @@ export function ProductVisual() {
           return (
             <motion.span
               key={m}
-              className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#121317]"
+              className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#0b1540]"
               style={{ left: `${pct}%` }}
-              initial={{ backgroundColor: "#3a3e47", scale: 0.8 }}
-              whileInView={{ backgroundColor: "#3d6bff", scale: 1 }}
+              initial={{ backgroundColor: "#2a3a78", scale: 0.8 }}
+              whileInView={{ backgroundColor: "#4169e1", scale: 1 }}
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.3, delay: 0.3 + (pct / 100) * 2.1 }}
             />
@@ -122,7 +122,7 @@ const satellites = [
 
 export function AiVisual() {
   return (
-    <div className="theme-dark relative h-full overflow-hidden rounded-2xl border border-white/10 bg-[#121317]">
+    <div className="theme-dark relative h-full overflow-hidden rounded-2xl border border-white/10 bg-[#0b1540]">
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
         {satellites.map((s) => (
           <line
@@ -131,7 +131,7 @@ export function AiVisual() {
             y1="50"
             x2={s.x}
             y2={s.y}
-            stroke="rgba(61,107,255,0.45)"
+            stroke="rgba(65,105,225,0.45)"
             strokeWidth="0.6"
             strokeDasharray="2 2"
             vectorEffect="non-scaling-stroke"
@@ -144,7 +144,7 @@ export function AiVisual() {
       {satellites.map((s, i) => (
         <motion.span
           key={s.label}
-          className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-hover shadow-[0_0_10px_#5a82ff]"
+          className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-hover shadow-[0_0_10px_#5c80f0]"
           animate={{ left: ["50%", `${s.x}%`, "50%"], top: ["50%", `${s.y}%`, "50%"] }}
           transition={{ duration: 2.6, delay: i * 0.85, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -152,7 +152,7 @@ export function AiVisual() {
 
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <span className="absolute inset-0 animate-ping rounded-2xl bg-accent/30 [animation-duration:2.4s]" />
-        <div className="relative flex items-center gap-1.5 rounded-2xl bg-accent px-3 py-2 shadow-[0_0_30px_rgba(61,107,255,0.5)]">
+        <div className="relative flex items-center gap-1.5 rounded-2xl bg-accent px-3 py-2 shadow-[0_0_30px_rgba(65,105,225,0.5)]">
           <Brain size={14} />
           <span className="font-mono text-[10px] font-medium uppercase tracking-wider">LLM</span>
         </div>
@@ -161,7 +161,7 @@ export function AiVisual() {
       {satellites.map((s) => (
         <div
           key={s.label}
-          className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full border border-white/10 bg-[#1d1f25] px-2 py-1 font-mono text-[9px] text-white/70"
+          className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full border border-white/10 bg-[#13205a] px-2 py-1 font-mono text-[9px] text-white/70"
           style={{ left: `${s.x}%`, top: `${s.y}%` }}
         >
           <s.icon size={11} className="text-accent-hover" />

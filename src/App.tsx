@@ -6,7 +6,16 @@ import { HorizontalScroll, Panel } from "./components/HorizontalScroll";
 import { Marquee } from "./components/Marquee";
 import { Navbar } from "./components/Navbar";
 import { ProjectsSection } from "./components/ProjectsSection";
+import { SectionNumber } from "./components/SectionHeader";
 import { TechStackSection } from "./components/TechStackSection";
+import { sectionOrder, type SectionKey } from "./data/sectionOrder";
+
+const sections: Record<SectionKey, () => React.JSX.Element> = {
+  about: AboutSection,
+  experience: ExperienceSection,
+  projects: ProjectsSection,
+  stack: TechStackSection,
+};
 
 export default function App() {
   return (
@@ -18,18 +27,16 @@ export default function App() {
             <HeroSection />
             <Marquee />
           </Panel>
-          <Panel>
-            <AboutSection />
-          </Panel>
-          <Panel>
-            <ExperienceSection />
-          </Panel>
-          <Panel>
-            <ProjectsSection />
-          </Panel>
-          <Panel>
-            <TechStackSection />
-          </Panel>
+          {sectionOrder.map((key, i) => {
+            const Section = sections[key];
+            return (
+              <Panel key={key}>
+                <SectionNumber.Provider value={i + 1}>
+                  <Section />
+                </SectionNumber.Provider>
+              </Panel>
+            );
+          })}
           <Panel>
             <Footer />
           </Panel>
