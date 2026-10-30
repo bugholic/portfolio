@@ -7,6 +7,7 @@ import { Marquee } from "./components/Marquee";
 import { Navbar } from "./components/Navbar";
 import { ProjectsSection } from "./components/ProjectsSection";
 import { SectionNumber } from "./components/SectionHeader";
+import { SpotlightCursor } from "./components/SpotlightCursor";
 import { TechStackSection } from "./components/TechStackSection";
 import { sectionOrder, type SectionKey } from "./data/sectionOrder";
 
@@ -20,6 +21,7 @@ const sections: Record<SectionKey, () => React.JSX.Element> = {
 export default function App() {
   return (
     <div className="relative min-h-screen bg-bg">
+      <SpotlightCursor />
       <Navbar />
       <main className="relative z-10">
         <HorizontalScroll>
