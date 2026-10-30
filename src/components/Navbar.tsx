@@ -228,8 +228,8 @@ export function Navbar() {
             <span className="font-display text-sm font-bold uppercase tracking-[0.18em]">Bugholic</span>
           </a>
 
-          <p className="eyebrow hidden md:block">
-            Code to evolve <span className="text-signal">/</span> innovate to assist
+          <p className="hidden text-[13px] tracking-tight text-muted md:block">
+            Code to evolve <span className="text-accent">/</span> innovate to assist
           </p>
 
           <div className="flex items-center gap-2.5">
