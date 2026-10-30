@@ -76,7 +76,7 @@ export function ProductVisual() {
               className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#0b1540]"
               style={{ left: `${pct}%` }}
               initial={{ backgroundColor: "#2a3a78", scale: 0.8 }}
-              whileInView={{ backgroundColor: "#4169e1", scale: 1 }}
+              whileInView={{ backgroundColor: "#6f88b8", scale: 1 }}
               viewport={{ once: true, amount: 0.6 }}
               transition={{ duration: 0.3, delay: 0.3 + (pct / 100) * 2.1 }}
             />
@@ -131,7 +131,7 @@ export function AiVisual() {
             y1="50"
             x2={s.x}
             y2={s.y}
-            stroke="rgba(65,105,225,0.45)"
+            stroke="rgba(111,136,184,0.45)"
             strokeWidth="0.6"
             strokeDasharray="2 2"
             vectorEffect="non-scaling-stroke"
@@ -144,7 +144,7 @@ export function AiVisual() {
       {satellites.map((s, i) => (
         <motion.span
           key={s.label}
-          className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-hover shadow-[0_0_10px_#5c80f0]"
+          className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-hover shadow-[0_0_10px_#8499c6]"
           animate={{ left: ["50%", `${s.x}%`, "50%"], top: ["50%", `${s.y}%`, "50%"] }}
           transition={{ duration: 2.6, delay: i * 0.85, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -152,7 +152,7 @@ export function AiVisual() {
 
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <span className="absolute inset-0 animate-ping rounded-2xl bg-accent/30 [animation-duration:2.4s]" />
-        <div className="relative flex items-center gap-1.5 rounded-2xl bg-accent px-3 py-2 shadow-[0_0_30px_rgba(65,105,225,0.5)]">
+        <div className="relative flex items-center gap-1.5 rounded-2xl bg-accent px-3 py-2 shadow-[0_0_30px_rgba(111,136,184,0.5)]">
           <Brain size={14} />
           <span className="font-mono text-[10px] font-medium uppercase tracking-wider">LLM</span>
         </div>

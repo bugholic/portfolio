@@ -14,10 +14,10 @@
   --color-muted: #9aa6cf;
   --color-white: #ffffff;
 
-  /* Royal blue accent */
-  --color-accent: #4169e1;
-  --color-accent-hover: #5c80f0;
-  --color-accent-soft: rgba(65, 105, 225, 0.16);
+  /* Muted blue accent */
+  --color-accent: #6f88b8;
+  --color-accent-hover: #8499c6;
+  --color-accent-soft: rgba(111, 136, 184, 0.16);
 
   /* Red signal: live dots, small marks and hover states */
   --color-signal: #e3262f;
@@ -43,9 +43,9 @@
   --color-line: rgba(10, 25, 90, 0.12);
   --color-muted: #545e7e;
   --color-white: #0a1647;
-  --color-accent: #2f55d4;
-  --color-accent-hover: #4169e1;
-  --color-accent-soft: rgba(65, 105, 225, 0.1);
+  --color-accent: #54689a;
+  --color-accent-hover: #6f88b8;
+  --color-accent-soft: rgba(111, 136, 184, 0.1);
   --color-signal: #d61f2a;
   color-scheme: light;
 }
@@ -65,8 +65,8 @@
   --color-line: rgba(255, 255, 255, 0.1);
   --color-muted: #9aa6cf;
   --color-white: #ffffff;
-  --color-accent: #4169e1;
-  --color-accent-hover: #5c80f0;
+  --color-accent: #6f88b8;
+  --color-accent-hover: #8499c6;
   color: #ffffff;
 }
 

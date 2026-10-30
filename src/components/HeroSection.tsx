@@ -66,7 +66,7 @@ export function HeroSection() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     <section ref={ref as any} className="relative overflow-hidden pt-28 md:pt-32">
       {/* Soft blue glow on the grey canvas */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(65,105,225,0.16),transparent)]" />
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(111,136,184,0.16),transparent)]" />
 
       {!reduce && (
         <LetterField phrases={phrases} index={index} container={ref} targets={slots} className={headingType} />

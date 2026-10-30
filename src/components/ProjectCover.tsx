@@ -20,8 +20,8 @@ function Frame({ children, label }: { children: React.ReactNode; label: string }
     <div className="theme-dark relative h-full w-full overflow-hidden bg-[#0a1340]">
       {/* grid + glow */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]" />
-      <div className="absolute -right-24 -top-24 h-72 w-72 bg-[radial-gradient(closest-side,rgba(65,105,225,0.3),transparent)] transition-transform duration-700 group-hover:scale-125" />
-      <div className="absolute -bottom-32 -left-16 h-64 w-64 bg-[radial-gradient(closest-side,rgba(65,105,225,0.12),transparent)]" />
+      <div className="absolute -right-24 -top-24 h-72 w-72 bg-[radial-gradient(closest-side,rgba(111,136,184,0.3),transparent)] transition-transform duration-700 group-hover:scale-125" />
+      <div className="absolute -bottom-32 -left-16 h-64 w-64 bg-[radial-gradient(closest-side,rgba(111,136,184,0.12),transparent)]" />
       <div className="absolute inset-0 flex items-center justify-center p-[7%] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]">
         {children}
       </div>
@@ -76,7 +76,7 @@ function LyricsCover() {
           </div>
         </Window>
         {/* Floating karaoke strip */}
-        <div className="absolute -bottom-8 left-1/2 w-[110%] -translate-x-1/2 rounded-2xl border border-accent/40 bg-[#070f33]/95 px-5 py-3 text-center shadow-[0_0_40px_rgba(65,105,225,0.35)]">
+        <div className="absolute -bottom-8 left-1/2 w-[110%] -translate-x-1/2 rounded-2xl border border-accent/40 bg-[#070f33]/95 px-5 py-3 text-center shadow-[0_0_40px_rgba(111,136,184,0.35)]">
           <p className="text-[10px] text-white/35">and I never felt so alive</p>
           <p className="mt-1 font-display text-base font-bold tracking-tight md:text-lg">
             <span className="text-accent">Singing every word</span>
@@ -186,7 +186,7 @@ function InventoryCover() {
           </div>
         </div>
         <div className="flex flex-col items-center gap-1">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent shadow-[0_0_24px_rgba(65,105,225,0.6)]">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent shadow-[0_0_24px_rgba(111,136,184,0.6)]">
             <Sparkles size={14} />
           </span>
           <span className="font-mono text-[7px] uppercase tracking-wider text-white/40">AI parse</span>
@@ -404,7 +404,7 @@ function DashboardCover() {
               ))}
             </div>
             <div className="flex items-center justify-center rounded-lg bg-white/[0.03]">
-              <span className="h-11 w-11 rounded-full bg-[conic-gradient(rgb(65,105,225)_0_55%,rgba(255,255,255,0.35)_55%_80%,rgba(255,255,255,0.12)_80%)] [mask:radial-gradient(circle,transparent_42%,black_43%)]" />
+              <span className="h-11 w-11 rounded-full bg-[conic-gradient(rgb(111,136,184)_0_55%,rgba(255,255,255,0.35)_55%_80%,rgba(255,255,255,0.12)_80%)] [mask:radial-gradient(circle,transparent_42%,black_43%)]" />
             </div>
           </div>
         </Window>

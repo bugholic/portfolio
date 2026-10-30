@@ -33,7 +33,7 @@ const principles = [
     title: "AI in the loop",
     text: "RAG pipelines, LLM agents and MCP integrations that do real work.",
     visual: AiVisual,
-    tone: "border-accent/25 bg-[linear-gradient(160deg,rgba(65,105,225,0.14),var(--color-surface)_55%)]",
+    tone: "border-accent/25 bg-[linear-gradient(160deg,rgba(111,136,184,0.14),var(--color-surface)_55%)]",
   },
 ];
 

@@ -8,6 +8,7 @@ import {
   useReducedMotion,
   useScroll,
   useTransform,
+  type MotionStyle,
   type MotionValue,
 } from "motion/react";
 import type { LucideIcon } from "lucide-react";
@@ -206,6 +207,8 @@ function GrowPath({
   style?: CSSProperties;
 }) {
   const drawn = useGrowthWindow(growth, from, to);
+  // A zero-length round-capped path still paints a dot, so keep it hidden until it grows.
+  const visible = useTransform(drawn, (value) => (value > 0 ? 1 : 0));
   return (
     <motion.path
       d={d}
@@ -214,7 +217,7 @@ function GrowPath({
       strokeLinecap="round"
       fill="none"
       transform={transform}
-      style={{ ...style, pathLength: drawn } as CSSProperties}
+      style={{ ...style, pathLength: drawn, opacity: visible } as MotionStyle}
     />
   );
 }
@@ -236,6 +239,8 @@ function Branch({
 }) {
   const start = WINDOWS.branchLead + index * WINDOWS.branchStep;
   const drawn = useGrowthWindow(growth, start, start + WINDOWS.branchDur);
+  // A zero-length round-capped path still paints a dot, so keep it hidden until it grows.
+  const visible = useTransform(drawn, (value) => (value > 0 ? 1 : 0));
   return (
     <motion.path
       d={branchPath(from, to)}
@@ -243,7 +248,7 @@ function Branch({
       strokeWidth={strokeWidth}
       strokeLinecap="round"
       fill="none"
-      style={{ transition: "stroke 300ms", pathLength: drawn } as CSSProperties}
+      style={{ transition: "stroke 300ms", pathLength: drawn, opacity: visible } as MotionStyle}
     />
   );
 }
@@ -264,7 +269,7 @@ function Sprout({
       <motion.path
         d={lens(26, 12)}
         transform="translate(0 -6)"
-        fill={index % 2 ? "rgba(65,105,225,0.6)" : "rgba(65,105,225,0.35)"}
+        fill={index % 2 ? "rgba(111,136,184,0.6)" : "rgba(111,136,184,0.35)"}
         style={{ originX: 0, originY: 0.5, scale: grown }}
       />
     </g>
@@ -334,15 +339,15 @@ function SkillLeaf({
         <g className="leaf-sway" style={{ animationDelay: `${(index % 4) * -1.1}s` }}>
           <path
             d={lens(leafW, leafH)}
-            fill={active ? "#4169e1" : "#13205a"}
-            stroke={active ? "#5c80f0" : "rgba(65,105,225,0.45)"}
+            fill={active ? "#6f88b8" : "#13205a"}
+            stroke={active ? "#8499c6" : "rgba(111,136,184,0.45)"}
             strokeWidth="1.5"
             style={{ transition: "fill 300ms, stroke 300ms" }}
           />
           {/* the midrib shows only at the tips, so it never runs through the label */}
           <path
             d={`M 10 ${mid} L ${iconX - 8} ${mid} M ${textX + textW + 8} ${mid} L ${leafW - 10} ${mid}`}
-            stroke={active ? "rgba(255,255,255,0.3)" : "rgba(65,105,225,0.35)"}
+            stroke={active ? "rgba(255,255,255,0.3)" : "rgba(111,136,184,0.35)"}
             strokeWidth="1"
             strokeLinecap="round"
             fill="none"
@@ -352,7 +357,7 @@ function SkillLeaf({
             y={mid - iconSize / 2}
             width={iconSize}
             height={iconSize}
-            color={active ? "#ffffff" : "#5c80f0"}
+            color={active ? "#ffffff" : "#8499c6"}
             strokeWidth={2}
           />
           <text
@@ -404,7 +409,7 @@ function TreeCanvas({
       aria-label="Skill tree"
     >
       {/* ground */}
-      <ellipse cx={layout.ground.cx} cy={layout.ground.cy} rx={layout.ground.rx} ry="16" fill="rgba(65,105,225,0.08)" />
+      <ellipse cx={layout.ground.cx} cy={layout.ground.cy} rx={layout.ground.rx} ry="16" fill="rgba(111,136,184,0.08)" />
       <GrowPath
         growth={growth}
         from={WINDOWS.ground[0]}
@@ -463,7 +468,7 @@ function TreeCanvas({
             index={i}
             from={from}
             to={at}
-            stroke={active === i ? "#4169e1" : "#24336e"}
+            stroke={active === i ? "#6f88b8" : "#24336e"}
             strokeWidth={layout.leaderWidth * (from[1] > height * 0.66 ? 0.7 : 0.58)}
           />
         ),
@@ -566,7 +571,7 @@ export function SkillTree({ skills }: { skills: Skill[] }) {
       <div className="md:sticky md:top-0 md:flex md:h-[100svh] md:items-center">
         <div className="relative w-full overflow-hidden rounded-3xl border border-line bg-surface p-5 md:p-8 lg:p-10">
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_50%_40%,black_20%,transparent_75%)]" />
-          <div className="pointer-events-none absolute left-1/2 top-[30%] h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(65,105,225,0.22),transparent)]" />
+          <div className="pointer-events-none absolute left-1/2 top-[30%] h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(111,136,184,0.22),transparent)]" />
 
           <div className="relative hidden lg:block">
             <TreeCanvas
