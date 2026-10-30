@@ -1,7 +1,10 @@
-import { Bot, FileText, Music2, Play, Scale, Search, Sparkles, Ticket } from "lucide-react";
+import { BarChart3, Bot, Check, FileText, MessageCircle, Music2, Play, Scale, Search, ShieldCheck, Sparkles, Ticket } from "lucide-react";
 
 export type CoverKey =
   | "lyrics"
+  | "dashboard"
+  | "odoo"
+  | "pipeline"
   | "flowboard"
   | "foodox"
   | "inventory"
@@ -214,11 +217,11 @@ function InventoryCover() {
 
 function LawCover() {
   return (
-    <Frame label="Semantic search · Qdrant">
+    <Frame label="RAG · Arabic / English">
       <div className="w-full max-w-[460px] space-y-3">
         <div className="flex items-center gap-2 rounded-full border border-white/10 bg-[#13205a] px-4 py-2.5">
           <Search size={13} className="text-accent" />
-          <span className="text-[11px] text-white/60">precedents on breach of lease, Bhopal HC</span>
+          <span className="text-[11px] text-white/60">termination clause in the client's lease</span>
           <span className="ml-auto rounded-full bg-accent px-2 py-0.5 text-[8px] font-medium">Analyze</span>
         </div>
         <div className="grid grid-cols-[1.4fr_1fr] gap-3">
@@ -266,7 +269,7 @@ function ItsmCover() {
     { t: "New hire onboarding", s: "Open", tone: "accent" as const },
   ];
   return (
-    <Frame label="RBAC · Microsoft 365">
+    <Frame label="Entra SSO · Algolia">
       <Window title="service desk" className="w-full max-w-[460px]">
         <div className="grid grid-cols-[90px_1fr] gap-3">
           <div className="space-y-1.5 border-r border-white/5 pr-3">
@@ -377,8 +380,131 @@ function ScrollFaceCover() {
   );
 }
 
+function DashboardCover() {
+  const bars = [42, 58, 50, 72, 64, 88];
+  return (
+    <Frame label="MCP · Dynamics 365">
+      <div className="relative w-full max-w-[460px]">
+        <div className="mb-3 ml-auto flex w-fit max-w-[75%] items-start gap-2 rounded-2xl rounded-br-sm bg-accent px-3 py-2 shadow-xl">
+          <p className="text-[10px] leading-snug">prepare the FY2026 finance report</p>
+        </div>
+        <Window title="ai-dashboard / fy2026-finance">
+          <div className="mb-3 grid grid-cols-4 gap-1.5">
+            {["Revenue", "Invoices", "Avg deal", "Margin"].map((k, i) => (
+              <div key={k} className="rounded-lg bg-white/[0.04] p-1.5">
+                <p className="font-mono text-[6px] uppercase tracking-wider text-white/35">{k}</p>
+                <p className="mt-0.5 font-display text-[11px] font-bold">{["4.2M", "1,284", "32k", "18%"][i]}</p>
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-[1.6fr_1fr] gap-2">
+            <div className="flex h-16 items-end gap-1.5 rounded-lg bg-white/[0.03] p-2">
+              {bars.map((h, i) => (
+                <span key={i} className={`flex-1 rounded-sm ${i === bars.length - 1 ? "bg-accent" : "bg-accent/40"}`} style={{ height: `${h}%` }} />
+              ))}
+            </div>
+            <div className="flex items-center justify-center rounded-lg bg-white/[0.03]">
+              <span className="h-11 w-11 rounded-full bg-[conic-gradient(rgb(65,105,225)_0_55%,rgba(255,255,255,0.35)_55%_80%,rgba(255,255,255,0.12)_80%)] [mask:radial-gradient(circle,transparent_42%,black_43%)]" />
+            </div>
+          </div>
+        </Window>
+        <div className="absolute -bottom-5 -left-3 flex items-center gap-1.5 rounded-full border border-white/10 bg-[#070f33] px-2.5 py-1.5 shadow-xl">
+          <ShieldCheck size={11} className="text-accent" />
+          <span className="font-mono text-[8px] text-white/60">your Entra role · 50+ tables</span>
+        </div>
+        <BarChart3 className="absolute -left-2 -top-1 text-accent" size={20} />
+      </div>
+    </Frame>
+  );
+}
+
+function OdooCover() {
+  return (
+    <Frame label="Python · MCP · Twilio">
+      <div className="flex w-full max-w-[460px] items-center gap-3">
+        <div className="w-[46%] rounded-2xl border border-white/10 bg-[#13205a] p-3 shadow-2xl">
+          <div className="mb-2.5 flex items-center gap-1.5 border-b border-white/5 pb-2">
+            <MessageCircle size={12} className="text-accent" />
+            <span className="text-[9px] font-medium">HR assistant</span>
+          </div>
+          <div className="space-y-1.5">
+            <p className="ml-auto w-fit max-w-[90%] rounded-xl rounded-br-sm bg-accent px-2 py-1.5 text-[8px] leading-snug">Log 6h on Project Atlas today</p>
+            <p className="w-fit max-w-[90%] rounded-xl rounded-bl-sm bg-white/[0.06] px-2 py-1.5 text-[8px] leading-snug text-white/75">
+              Draft ready. Sent to HR for approval.
+            </p>
+            <p className="ml-auto w-fit rounded-xl rounded-br-sm bg-accent px-2 py-1.5 text-[8px]">How much leave do I have?</p>
+          </div>
+        </div>
+        <Window title="odoo-mcp · 19 tools" className="flex-1">
+          <div className="space-y-1.5">
+            {[
+              { t: "timesheet.create", s: "Needs HR", tone: "accent" as const },
+              { t: "leave.balance", s: "Own records", tone: "muted" as const },
+              { t: "invoice.list", s: "Role: finance", tone: "muted" as const },
+            ].map((row) => (
+              <div key={row.t} className="flex items-center justify-between gap-2 rounded-md bg-[#1a2864] px-2 py-1.5">
+                <span className="font-mono text-[8px] text-white/70">{row.t}</span>
+                <Pill tone={row.tone}>{row.s}</Pill>
+              </div>
+            ))}
+            <div className="flex items-center gap-1.5 pt-1">
+              <Check size={10} className="text-accent" />
+              <span className="font-mono text-[7px] text-white/40">every call written to audit log</span>
+            </div>
+          </div>
+        </Window>
+      </div>
+    </Frame>
+  );
+}
+
+function PipelineCover() {
+  const nodes = [
+    { name: "planner", x: "8%", y: "38%", state: "done" },
+    { name: "coder", x: "38%", y: "12%", state: "live" },
+    { name: "tester", x: "38%", y: "64%", state: "live" },
+    { name: "reviewer", x: "70%", y: "38%", state: "idle" },
+  ];
+  return (
+    <Frame label="Next.js · React Flow · SSE">
+      <Window title="pipeline / run-482" className="w-full max-w-[460px]">
+        <div className="relative h-36">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full text-white/15" fill="none" stroke="currentColor" strokeWidth="0.6">
+            <path d="M24 46 C32 46, 32 22, 40 22" className="text-accent" strokeDasharray="2 2" />
+            <path d="M24 46 C32 46, 32 74, 40 74" className="text-accent" strokeDasharray="2 2" />
+            <path d="M56 22 C64 22, 64 46, 72 46" />
+            <path d="M56 74 C64 74, 64 46, 72 46" />
+          </svg>
+          {nodes.map((n) => (
+            <div
+              key={n.name}
+              className={`absolute flex w-[22%] items-center gap-1.5 rounded-lg border px-2 py-1.5 ${
+                n.state === "live" ? "border-accent/60 bg-accent/10" : n.state === "done" ? "border-white/10 bg-[#1a2864]" : "border-white/5 bg-white/[0.02]"
+              }`}
+              style={{ left: n.x, top: n.y }}
+            >
+              <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${n.state === "idle" ? "bg-white/20" : "bg-accent"} ${n.state === "live" ? "animate-pulse" : ""}`} />
+              <span className="truncate font-mono text-[8px] text-white/70">{n.name}</span>
+            </div>
+          ))}
+        </div>
+        <div className="mt-1 flex items-center gap-1.5 border-t border-white/5 pt-2">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent" />
+            <span className="relative h-1.5 w-1.5 rounded-full bg-accent" />
+          </span>
+          <span className="font-mono text-[8px] text-white/40">streaming hook events · PostToolUse → tester</span>
+        </div>
+      </Window>
+    </Frame>
+  );
+}
+
 const covers: Record<CoverKey, () => React.JSX.Element> = {
   lyrics: LyricsCover,
+  dashboard: DashboardCover,
+  odoo: OdooCover,
+  pipeline: PipelineCover,
   flowboard: FlowboardCover,
   foodox: FoodoxCover,
   inventory: InventoryCover,

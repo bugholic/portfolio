@@ -14,7 +14,7 @@ export function ExperienceSection() {
       <div className="container-x">
         <SectionHeader
           label="Experience"
-          aside="3+ years"
+          aside="2+ years"
           title={[[{ text: "Where I've " }, { text: "shipped", className: "text-accent" }]]}
         />
       </div>

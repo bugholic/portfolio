@@ -56,10 +56,10 @@ export function AboutSection() {
               <span className="text-accent">turning business requirements into reliable software.</span>
             </p>
             <p className="mt-8 max-w-2xl text-base leading-7 text-muted">
-              Full-stack developer with 3+ years building web and mobile applications in JavaScript, TypeScript,
-              React, Next.js, Node.js and Python. I care about performance and query optimization, background
-              scheduling, real-time systems and AI/RAG-based applications, and I share what I build with a growing
-              community on LinkedIn.
+              Full-stack and AI engineer building production web apps, RAG pipelines and MCP servers with Next.js,
+              TypeScript, Python and Node.js. I've shipped bilingual (English/Arabic) SaaS platforms, enterprise
+              integrations (Dynamics 365, Odoo, Microsoft Entra) and LLM agents with role-based guardrails, and I
+              share what I build with a growing community on LinkedIn.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
               {topSkills.map((skill) => (
@@ -78,7 +78,7 @@ export function AboutSection() {
             <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/70">Currently</span>
             <div className="mt-16">
               <p className="font-display text-4xl font-bold uppercase leading-none tracking-tight">Greenmint Labs</p>
-              <p className="mt-3 text-sm text-white/80">Full-Stack Developer · Since Apr 2025</p>
+              <p className="mt-3 text-sm text-white/80">Senior Software Engineer · Since Apr 2025</p>
             </div>
           </motion.div>
 
